@@ -53,5 +53,14 @@ public class User {
         this.visitPoints = visitPoints;
     }
     
-    
+    public boolean equals(Object otherObject){
+        
+        if(this==otherObject)
+        {
+            
+            return true;
+        }
+        User otherUser = (User)otherObject;
+        return this.nickname.equals(otherUser.nickname)&&this.currentCity.equals(otherUser.currentCity)&&this.email.equals(otherUser.email)&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
+    }
 }
