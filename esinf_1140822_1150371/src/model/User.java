@@ -13,6 +13,13 @@ import java.util.Set;
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
 public class User {
+
+    /**
+     * @return the nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
     
     
     private String nickname;
@@ -61,6 +68,6 @@ public class User {
             return true;
         }
         User otherUser = (User)otherObject;
-        return this.nickname.equals(otherUser.nickname)&&this.currentCity.equals(otherUser.currentCity)&&this.email.equals(otherUser.email)&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
+        return this.getNickname().equals(otherUser.getNickname())&&this.currentCity.equals(otherUser.currentCity)&&this.email.equals(otherUser.email)&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
     }
 }
