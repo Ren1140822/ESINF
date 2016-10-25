@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
-public class User implements Friendable {
+public class User implements Friendable,Checkinable {
 
     private String nickname;
 
@@ -21,6 +21,8 @@ public class User implements Friendable {
     private String currentCity;
 
     private Set<User> friends;
+    
+    private Set<City> citiesVisited;
 
     private int visitPoints;
 
@@ -37,16 +39,18 @@ public class User implements Friendable {
         this.email = DEFAULT_EMAIL;
         this.currentCity = DEFAULT_CURRENT_CITY;
         this.friends = new HashSet<User>();
+        this.citiesVisited = new HashSet<City>();
         this.visitPoints = DEFAULT_VISIT_POINTS;
 
     }
 
-    public User(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
+    public User(String nickname, String email, String currentCity, Set<User> friends,Set<City> citiesVisited, int visitPoints) {
         this.nickname = nickname;
         this.email = email;
         this.currentCity = currentCity;
         this.friends = friends;
         this.visitPoints = visitPoints;
+        this.citiesVisited=citiesVisited;
     }
 
     public String getEmail() {
@@ -119,6 +123,21 @@ public class User implements Friendable {
             if (friend.equals(user)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkIn(City city) {
+        if(!this.getCurrentCity().equals(city))
+        {
+            this.visitPoints += city.getNumberOfPointsAwarded();
+            if(city.getMayor().getVisitPoints()<this.visitPoints)
+            {
+                city.setMayor(this);
+            }
+            this.citiesVisited.add(city);
+            return true;
         }
         return false;
     }

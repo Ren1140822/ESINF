@@ -5,8 +5,12 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,5 +32,40 @@ public class ListOfCities {
             }
         }
         return null;
+    }
+    
+    public City getCityByUser(User user)
+    {
+        for (City city : listOfCities) {
+            if(city.getMayor().equals(user))
+            {
+                return city;
+            }
+        }
+        return null;
+    }
+
+    public Set<City> getListOfCities() {
+        return listOfCities;
+    }
+    
+    public Map<City,User> getMapOfCitiesAndMayorsByDescOrder()
+    {
+         Map<City,User> mapOfCitiesAndMayorsByDescOrderMap = new HashMap();
+         ArrayList<User> usersList = new ArrayList();
+         for (City city : listOfCities) {
+            usersList.add(city.getMayor());
+        }
+         Comparator<User> comparator = new Comparator<User>() {
+             @Override
+             public int compare(User t, User t1) {
+                return (t.getVisitPoints()>t1.getVisitPoints())?-1:t.getVisitPoints()<t1.getVisitPoints()?1:0;
+             }
+         };
+         Collections.sort(usersList, comparator);
+         for (User user : usersList) {
+            mapOfCitiesAndMayorsByDescOrderMap.put(getCityByUser(user), user);
+        }
+         return mapOfCitiesAndMayorsByDescOrderMap;
     }
 }
