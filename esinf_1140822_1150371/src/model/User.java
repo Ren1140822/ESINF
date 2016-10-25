@@ -104,7 +104,15 @@ public class User implements Friendable {
         }
         return false;
     }
-
+    @Override
+    public boolean removeFriend(User user) {
+        if(friendExists(user)){
+            this.friends.remove(user);
+            user.friends.remove(this);
+            return true;
+        }
+        return false;
+    }
     @Override
     public boolean friendExists(User user) {
         for (User friend : friends) {

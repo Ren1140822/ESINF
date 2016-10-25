@@ -15,4 +15,6 @@ public interface Friendable {
     
     public boolean friendExists(User user);
     
+    public boolean removeFriend(User user);
+    
 }
