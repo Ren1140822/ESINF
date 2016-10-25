@@ -5,7 +5,9 @@
  */
 package controller;
 
+import java.util.Map;
 import java.util.Set;
+import model.City;
 import model.ListOfUsers;
 import model.MainRegistry;
 import model.User;
@@ -26,15 +28,15 @@ public class AddUserController {
 
     public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
         if (verifyData(nickname, email)) {
-            listOfUsers.getListOfUsers().add(new User(nickname, email, currentCity, friends, visitPoints));
+            listOfUsers.getMapOfUsers().put(new User(nickname, email, currentCity, friends, visitPoints),new City());
             return true;
         }
         return false;
     }
 
     private boolean verifyData(String nickname, String email) {
-        Set<User> listOfUserss = listOfUsers.getListOfUsers();
-        for (User user : listOfUserss) {
+       Map<User,City> listOfUserss = listOfUsers.getMapOfUsers();
+        for (User user : listOfUserss.keySet()) {
             if (user.getNickname().equals(nickname) || user.getEmail().equals(email)) {
                 return false;
             }
