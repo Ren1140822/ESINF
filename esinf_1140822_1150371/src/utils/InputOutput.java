@@ -6,7 +6,9 @@ package utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import model.City;
@@ -44,9 +46,9 @@ public class InputOutput {
 
     }
 
-    public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
+    public static Map<User,City> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Set<User> users = new HashSet<User>();
+        Map<User,City> users = new HashMap<User,City>();
         String nickName = "";
         String email = "";
         Set<City> cities = new HashSet<City>();
@@ -62,7 +64,7 @@ public class InputOutput {
             Object[] aux = cities.toArray();
             City currentCity = (City) aux[0];
             User newUser = new User(nickName, email, currentCity.getCityName(), friends, cities.size());
-            users.add(newUser);
+            users.put(newUser,currentCity);
         }
 
         return users;
