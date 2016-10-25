@@ -19,9 +19,9 @@ public class AddUserController {
     MainRegistry r;
     ListOfUsers listOfUsers;
 
-    public AddUserController(MainRegistry r, ListOfUsers listOfUsers) {
+    public AddUserController(MainRegistry r) {
         this.r = r;
-        this.listOfUsers = listOfUsers;
+        this.listOfUsers = r.getListOfUsers();
     }
 
     public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
