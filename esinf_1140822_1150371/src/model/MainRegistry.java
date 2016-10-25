@@ -5,6 +5,9 @@
  */
 package model;
 
+import controller.AddUserController;
+import java.util.Set;
+
 /**
  *
  * @author Jose Silva <1150371@isep.ipp.pt>
@@ -45,6 +48,11 @@ public class MainRegistry {
      */
     public void setListOfUsers(ListOfUsers listOfUsers) {
         this.listOfUsers = listOfUsers;
+    }
+
+    public boolean addUser(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
+        AddUserController controller = new AddUserController(this, listOfUsers);
+        return controller.AddUser(nickname, email, currentCity, friends, visitPoints);
     }
 
 }

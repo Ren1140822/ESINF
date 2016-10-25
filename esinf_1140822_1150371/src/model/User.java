@@ -68,6 +68,13 @@ public class User {
             return true;
         }
         User otherUser = (User)otherObject;
-        return this.getNickname().equals(otherUser.getNickname())&&this.currentCity.equals(otherUser.currentCity)&&this.email.equals(otherUser.email)&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
+        return this.getNickname().equals(otherUser.getNickname())&&this.currentCity.equals(otherUser.currentCity)&&this.getEmail().equals(otherUser.getEmail())&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
     }
 }

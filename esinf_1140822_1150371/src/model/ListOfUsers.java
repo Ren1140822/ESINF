@@ -15,7 +15,7 @@ import java.util.Set;
 public class ListOfUsers {
 
     private Set<User> listOfUsers;
-
+   
     public ListOfUsers() {
         listOfUsers = new HashSet<User>();
     }
