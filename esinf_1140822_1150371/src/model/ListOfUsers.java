@@ -5,7 +5,9 @@
  */
 package model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,28 +16,28 @@ import java.util.Set;
  */
 public class ListOfUsers {
 
-    private Set<User> listOfUsers;
-
+ 
+    private Map<User,City> usersMap;
     public ListOfUsers() {
-        listOfUsers = new HashSet<User>();
+      
+         usersMap = new HashMap<>();
     }
 
     /**
      * @return the listOfUsers
      */
-    public Set<User> getListOfUsers() {
-        return listOfUsers;
+    public Map<User,City> getMapOfUsers() {
+     
+        return usersMap;
     }
 
-    /**
-     * @param listOfUsers the listOfUsers to set
-     */
-    public void setListOfUsers(Set<User> listOfUsers) {
-        this.listOfUsers = listOfUsers;
+    public void setUsersMap(Map<User, City> usersMap) {
+        this.usersMap = usersMap;
     }
+
 
     public User getUserByNickname(String nick) {
-        for (User user : listOfUsers) {
+        for (User user : usersMap.keySet()) {
             if (user.getNickname().equals(nick)) {
                 return user;
             }
