@@ -51,9 +51,9 @@ public class MainRegistry {
         this.listOfUsers = listOfUsers;
     }
 
-    public boolean addUser(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
+    public boolean addUser(String nickname, String email, String currentCity, Set<User> friends,Set<City>cities, int visitPoints) {
         AddUserController controller = new AddUserController(this);
-        return controller.AddUser(nickname, email, currentCity, friends, visitPoints);
+        return controller.AddUser(nickname, email, currentCity, friends,cities, visitPoints);
     }
 
     public boolean removeUser(String nickname) {

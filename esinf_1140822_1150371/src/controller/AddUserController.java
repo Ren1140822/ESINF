@@ -26,9 +26,9 @@ public class AddUserController {
         this.listOfUsers = r.getListOfUsers();
     }
 
-    public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
+    public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends,Set<City> cities, int visitPoints) {
         if (verifyData(nickname, email)) {
-            listOfUsers.getMapOfUsers().put(new User(nickname, email, currentCity, friends, visitPoints),new City());
+            listOfUsers.getMapOfUsers().put(new User(nickname, email, currentCity, friends,cities, visitPoints),new City());
             return true;
         }
         return false;
