@@ -28,15 +28,15 @@ public class AddUserController {
 
     public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends,Set<City> cities, int visitPoints) {
         if (verifyData(nickname, email)) {
-            listOfUsers.getMapOfUsers().put(new User(nickname, email, currentCity, friends,cities, visitPoints),new City());
+            listOfUsers.getUserSet().add(new User(nickname, email, currentCity, friends,cities, visitPoints));
             return true;
         }
         return false;
     }
 
     private boolean verifyData(String nickname, String email) {
-       Map<User,City> listOfUserss = listOfUsers.getMapOfUsers();
-        for (User user : listOfUserss.keySet()) {
+       Set<User> listOfUserss = listOfUsers.getUserSet();
+        for (User user : listOfUserss) {
             if (user.getNickname().equals(nickname) || user.getEmail().equals(email)) {
                 return false;
             }

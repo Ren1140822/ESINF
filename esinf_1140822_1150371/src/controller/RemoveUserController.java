@@ -22,8 +22,8 @@ public class RemoveUserController {
 
     public boolean removeUser(String nick) {
         User user = r.getListOfUsers().getUserByNickname(nick);
-        if (r.getListOfUsers().getMapOfUsers().keySet().contains(user)) {
-            r.getListOfUsers().getMapOfUsers().keySet().remove(user);
+        if (r.getListOfUsers().getUserSet().contains(user)) {
+            r.getListOfUsers().getUserSet().remove(user);
             return true;
         }
         return false;

@@ -46,9 +46,9 @@ public class InputOutput {
 
     }
 
-    public static Map<User,City> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
+    public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Map<User,City> users = new HashMap<User,City>();
+        Set<User> users = new HashSet<>();
         String nickName = "";
         String email = "";
         Set<City> cities = new HashSet<City>();
@@ -64,7 +64,7 @@ public class InputOutput {
             Object[] aux = cities.toArray();
             City currentCity = (City) aux[0];
             User newUser = new User(nickName, email, currentCity.getCityName(), friends, cities,0);
-            users.put(newUser,currentCity);
+            users.add(newUser);
         }
 
         return users;

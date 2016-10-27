@@ -17,27 +17,27 @@ import java.util.Set;
 public class ListOfUsers {
 
  
-    private Map<User,City> usersMap;
+
+    private Set<User> userSet;
     public ListOfUsers() {
       
-         usersMap = new HashMap<>();
+      
+         userSet = new HashSet<>();
     }
 
-    /**
-     * @return the listOfUsers
-     */
-    public Map<User,City> getMapOfUsers() {
-     
-        return usersMap;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setUsersMap(Map<User, City> usersMap) {
-        this.usersMap = usersMap;
+
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 
 
     public User getUserByNickname(String nick) {
-        for (User user : usersMap.keySet()) {
+        for (User user : userSet) {
             if (user.getNickname().equals(nick)) {
                 return user;
             }

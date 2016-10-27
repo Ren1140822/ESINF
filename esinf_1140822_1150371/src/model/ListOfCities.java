@@ -8,8 +8,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,7 +51,7 @@ public class ListOfCities {
     
     public Map<City,User> getMapOfCitiesAndMayorsByDescOrder()
     {
-         Map<City,User> mapOfCitiesAndMayorsByDescOrderMap = new HashMap();
+         Map<City,User> mapOfCitiesAndMayorsByDescOrderMap = new LinkedHashMap();
          ArrayList<User> usersList = new ArrayList();
          for (City city : listOfCities) {
             usersList.add(city.getMayor());
