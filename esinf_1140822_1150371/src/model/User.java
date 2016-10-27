@@ -67,7 +67,7 @@ public class User {
             return true;
         }
         User otherUser = (User) otherObject;
-        return this.getNickname().equals(otherUser.getNickname()) && this.currentCity.equals(otherUser.currentCity) && this.getEmail().equals(otherUser.getEmail()) && this.friends.equals(otherUser.friends) && this.visitPoints == otherUser.visitPoints;
+        return this.getNickname().equals(otherUser.getNickname()) && this.currentCity.equals(otherUser.currentCity) && this.getEmail().equals(otherUser.getEmail()) && this.getFriends().equals(otherUser.getFriends()) && this.visitPoints == otherUser.visitPoints;
     }
 
     /**
@@ -91,12 +91,19 @@ public class User {
 
     public int getFriendsByCity(String cityName) {
         int count = 0;
-        for (User friend : friends) {
+        for (User friend : getFriends()) {
 
             if (friend.getCurrentCity().equals(cityName)) {
                 count++;
             }
         }
         return count;
+    }
+
+    /**
+     * @return the friends
+     */
+    public Set<User> getFriends() {
+        return friends;
     }
 }

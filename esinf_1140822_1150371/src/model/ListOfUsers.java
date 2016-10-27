@@ -42,4 +42,13 @@ public class ListOfUsers {
         }
         return null;
     }
+    public User getMostInfluentUser(){
+        User user1= (User)listOfUsers.toArray()[0];
+        for (User user : listOfUsers) {
+            if(user.getFriends().size()>user1.getFriends().size()){
+                user1=user;
+            }
+        }
+        return user1;
+    }
 }
