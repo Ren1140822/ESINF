@@ -7,20 +7,24 @@ package utils;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import model.City;
+import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import model.MainRegistry;
 
 /**
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
 public class InputOutputTest {
+   
     
     public InputOutputTest() {
     }
@@ -71,14 +75,16 @@ public class InputOutputTest {
      * Test of readUsersFromFile method, of class InputOutput.
      */
 //    @Test
-//    public void testReadUsersFromFile() {
+//    public void testReadUsersFromFile() throws Exception {
 //        System.out.println("readUsersFromFile");
 //        String filePath = "";
-//        Set<User> expResult = null;
-//        Set<User> result = InputOutput.readUsersFromFile(filePath);
+//        MainRegistry r = null;
+//        Map<User, City> expResult = null;
+//        Map<User, City> result = InputOutput.readUsersFromFile(filePath, r);
 //        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+//       
 //    }
+
+  
     
 }

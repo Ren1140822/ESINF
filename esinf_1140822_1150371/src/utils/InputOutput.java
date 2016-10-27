@@ -63,8 +63,10 @@ public class InputOutput {
             friends = getFriendsFromString(secondLine, r);
             Object[] aux = cities.toArray();
             City currentCity = (City) aux[0];
+
             User newUser = new User(nickName, email, currentCity.getCityName(), friends, cities,0);
             users.add(newUser);
+
         }
 
         return users;

@@ -12,16 +12,16 @@ import java.util.Set;
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
-public class User implements Friendable,Checkinable {
+public class User implements Friendable, Checkinable {
 
     private String nickname;
 
     private String email;
 
-    private String currentCity;
+    private City currentCity;
 
     private Set<User> friends;
-    
+
     private Set<City> citiesVisited;
 
     private int visitPoints;
@@ -30,27 +30,31 @@ public class User implements Friendable,Checkinable {
 
     private static String DEFAULT_EMAIL = "No email";
 
-    private static String DEFAULT_CURRENT_CITY = "No current city";
-
     private static int DEFAULT_VISIT_POINTS = 0;
+
+    private static Set<City> cities;
 
     public User() {
         this.nickname = DEFAULT_NICKNAME;
         this.email = DEFAULT_EMAIL;
-        this.currentCity = DEFAULT_CURRENT_CITY;
+        this.currentCity = new City();
         this.friends = new HashSet<User>();
+
         this.citiesVisited = new HashSet<City>();
         this.visitPoints = DEFAULT_VISIT_POINTS;
 
     }
 
-    public User(String nickname, String email, String currentCity, Set<User> friends,Set<City> citiesVisited, int visitPoints) {
+    public User(String nickname, String email, String currentCity, Set<User> friends, Set<City> citiesVisited, int visitPoints) {
+
         this.nickname = nickname;
         this.email = email;
-        this.currentCity = currentCity;
+
+        this.currentCity = (City) citiesVisited.toArray()[0];
         this.friends = friends;
+        this.citiesVisited = citiesVisited;
         this.visitPoints = visitPoints;
-        this.citiesVisited=citiesVisited;
+
     }
 
     public String getEmail() {
@@ -61,11 +65,11 @@ public class User implements Friendable,Checkinable {
         this.email = email;
     }
 
-    public String getCurrentCity() {
+    public City getCurrentCity() {
         return currentCity;
     }
 
-    public void setCurrentCity(String currentCity) {
+    public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
     }
 
@@ -101,22 +105,24 @@ public class User implements Friendable,Checkinable {
 
     @Override
     public boolean addFriend(User user) {
-        if(!friendExists(user)){
+        if (!friendExists(user)) {
             this.friends.add(user);
             user.friends.add(this);
             return true;
         }
         return false;
     }
+
     @Override
     public boolean removeFriend(User user) {
-        if(friendExists(user)){
+        if (friendExists(user)) {
             this.friends.remove(user);
             user.friends.remove(this);
             return true;
         }
         return false;
     }
+
     @Override
     public boolean friendExists(User user) {
         for (User friend : friends) {
@@ -129,11 +135,9 @@ public class User implements Friendable,Checkinable {
 
     @Override
     public boolean checkIn(City city) {
-        if(!this.getCurrentCity().equals(city))
-        {
+        if (!this.getCurrentCity().equals(city)) {
             this.visitPoints += city.getNumberOfPointsAwarded();
-            if(city.getMayor().getVisitPoints()<this.visitPoints)
-            {
+            if (city.getMayor().getVisitPoints() < this.visitPoints) {
                 city.setMayor(this);
             }
             this.citiesVisited.add(city);
@@ -141,4 +145,24 @@ public class User implements Friendable,Checkinable {
         }
         return false;
     }
+
+    public int getPoints() {
+        int ret = 0;
+        for (City citie : cities) {
+            ret += citie.getNumberOfPointsAwarded();
+        }
+        return ret;
+    }
+
+    public int getFriendsByCity(String cityName) {
+        int count = 0;
+        for (User friend : getFriends()) {
+
+            if (friend.getCurrentCity().equals(cityName)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

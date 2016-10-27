@@ -94,5 +94,8 @@ public class City {
         City otherCity = (City)otherObject;
         return this.cityName.equals(otherCity.cityName) && this.latitude == otherCity.latitude && this.longitude == otherCity.longitude && this.numberOfPointsAwarded == otherCity.numberOfPointsAwarded && this.mayor.equals(otherCity.mayor);
     }
+    public String toString(){
+        return this.cityName;
+    }
 
 }
