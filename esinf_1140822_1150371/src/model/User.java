@@ -80,8 +80,23 @@ public class User {
     public int getPoints() {
         int ret = 0;
         for (City citie : cities) {
-            ret+=citie.getNumberOfPointsAwarded();
+            ret += citie.getNumberOfPointsAwarded();
         }
         return ret;
+    }
+
+    public String getCurrentCity() {
+        return this.currentCity;
+    }
+
+    public int getFriendsByCity(String cityName) {
+        int count = 0;
+        for (User friend : friends) {
+
+            if (friend.getCurrentCity().equals(cityName)) {
+                count++;
+            }
+        }
+        return count;
     }
 }
