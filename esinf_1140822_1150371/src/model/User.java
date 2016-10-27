@@ -20,55 +20,54 @@ public class User {
     public String getNickname() {
         return nickname;
     }
-    
-    
+
     private String nickname;
-    
+
     private String email;
-    
+
     private String currentCity;
-    
+
     private Set<User> friends;
-    
+
     private int visitPoints;
 
-    private static String DEFAULT_NICKNAME="No nickname";
-    
-    private static String DEFAULT_EMAIL ="No email";
-    
-    private static String DEFAULT_CURRENT_CITY="No current city";
-    
-    private static int DEFAULT_VISIT_POINTS=0;
-    
-    
-    public User()
-    {
-         this.nickname = DEFAULT_NICKNAME;
+    private static String DEFAULT_NICKNAME = "No nickname";
+
+    private static String DEFAULT_EMAIL = "No email";
+
+    private static String DEFAULT_CURRENT_CITY = "No current city";
+
+    private static int DEFAULT_VISIT_POINTS = 0;
+
+    private static Set<City> cities;
+
+    public User() {
+        this.nickname = DEFAULT_NICKNAME;
         this.email = DEFAULT_EMAIL;
         this.currentCity = DEFAULT_CURRENT_CITY;
         this.friends = new HashSet<User>();
-        this.visitPoints =DEFAULT_VISIT_POINTS;
-        
-        
+        this.visitPoints = DEFAULT_VISIT_POINTS;
+
     }
-    
-    public User(String nickname, String email, String currentCity, Set<User> friends, int visitPoints) {
+
+    public User(String nickname, String email, Set<User> friends, Set<City> cities) {
         this.nickname = nickname;
         this.email = email;
-        this.currentCity = currentCity;
+        Object[] citiess = cities.toArray();
+        this.currentCity = citiess[0].toString();
         this.friends = friends;
-        this.visitPoints = visitPoints;
+        this.cities = cities;
+        this.visitPoints = citiess.length;
     }
-    
-    public boolean equals(Object otherObject){
-        
-        if(this==otherObject)
-        {
-            
+
+    public boolean equals(Object otherObject) {
+
+        if (this == otherObject) {
+
             return true;
         }
-        User otherUser = (User)otherObject;
-        return this.getNickname().equals(otherUser.getNickname())&&this.currentCity.equals(otherUser.currentCity)&&this.getEmail().equals(otherUser.getEmail())&&this.friends.equals(otherUser.friends)&&this.visitPoints==otherUser.visitPoints;
+        User otherUser = (User) otherObject;
+        return this.getNickname().equals(otherUser.getNickname()) && this.currentCity.equals(otherUser.currentCity) && this.getEmail().equals(otherUser.getEmail()) && this.friends.equals(otherUser.friends) && this.visitPoints == otherUser.visitPoints;
     }
 
     /**
@@ -76,5 +75,13 @@ public class User {
      */
     public String getEmail() {
         return email;
+    }
+
+    public int getPoints() {
+        int ret = 0;
+        for (City citie : cities) {
+            ret+=citie.getNumberOfPointsAwarded();
+        }
+        return ret;
     }
 }
