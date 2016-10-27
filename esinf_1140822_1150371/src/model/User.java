@@ -5,8 +5,14 @@
  */
 package model;
 
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -32,12 +38,10 @@ public class User implements Friendable, Checkinable {
 
     private static int DEFAULT_VISIT_POINTS = 0;
 
-    private static Set<City> cities;
-
     public User() {
         this.nickname = DEFAULT_NICKNAME;
         this.email = DEFAULT_EMAIL;
-        this.currentCity = new City();
+
         this.friends = new HashSet<User>();
 
         this.citiesVisited = new HashSet<City>();
@@ -50,7 +54,6 @@ public class User implements Friendable, Checkinable {
         this.nickname = nickname;
         this.email = email;
 
-        this.currentCity = (City) citiesVisited.toArray()[0];
         this.friends = friends;
         this.citiesVisited = citiesVisited;
         this.visitPoints = visitPoints;
@@ -66,7 +69,7 @@ public class User implements Friendable, Checkinable {
     }
 
     public City getCurrentCity() {
-        return currentCity;
+        return (City) this.citiesVisited.toArray()[citiesVisited.size()-1];
     }
 
     public void setCurrentCity(City currentCity) {
@@ -93,6 +96,16 @@ public class User implements Friendable, Checkinable {
         return nickname;
     }
 
+    public Set<City> getCitiesVisited() {
+        return citiesVisited;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    
+    
     public boolean equals(Object otherObject) {
 
         if (this == otherObject) {
@@ -133,6 +146,7 @@ public class User implements Friendable, Checkinable {
         return false;
     }
 
+    
     @Override
     public boolean checkIn(City city) {
         if (!this.getCurrentCity().equals(city)) {
@@ -148,21 +162,47 @@ public class User implements Friendable, Checkinable {
 
     public int getPoints() {
         int ret = 0;
-        for (City citie : cities) {
+        for (City citie : citiesVisited) {
             ret += citie.getNumberOfPointsAwarded();
         }
         return ret;
     }
 
-    public int getFriendsByCity(String cityName) {
-        int count = 0;
-        for (User friend : getFriends()) {
+    public Set<User> getFriendsByCity(String cityName, int numberOfResults) {
 
-            if (friend.getCurrentCity().equals(cityName)) {
-                count++;
+        Set<User> friends = new LinkedHashSet();
+        long thisLatitude =  ((City)this.citiesVisited.toArray()[citiesVisited.size()-1]).getLatitude();
+        long thisLongitude =  ((City)this.citiesVisited.toArray()[citiesVisited.size()-1]).getLongitude();
+        Set<User> actualFriends = getFriends();
+        Comparator<Long> comparator = new Comparator<Long>() {
+            @Override
+            public int compare(Long t, Long t1) {
+                return (t > t1) ? 1 : t < t1 ? -1 : 0;
+            }
+        };
+
+        Map<Long, User> mapNearbyUsers = new TreeMap<>(comparator);
+
+        for (User friend : actualFriends) {
+            if (friend.getCurrentCity().getCityName().equals(cityName)) {
+                long otherLatitude = friend.getCurrentCity().getLatitude();
+                long otherLongitude = friend.getCurrentCity().getLongitude();
+                long differenceLatitude = Math.abs(thisLatitude - otherLatitude);
+                long differenceLongitude = Math.abs(thisLongitude - otherLongitude);
+                long sum = differenceLatitude + differenceLongitude;
+                mapNearbyUsers.put(sum, friend);
+
             }
         }
-        return count;
+        int index=0;
+        for (User user : mapNearbyUsers.values()) {
+            if(index>=numberOfResults)
+            {
+               break;
+            }
+               friends.add(user);
+        }
+        return friends;
     }
 
 }
