@@ -5,7 +5,7 @@
  */
 package controller;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 import model.City;
 import model.ListOfUsers;
@@ -26,7 +26,7 @@ public class AddUserController {
         this.listOfUsers = r.getListOfUsers();
     }
 
-    public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends, Set<City> cities, int visitPoints) {
+    public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends,List<City> cities, int visitPoints) {
 
         if (verifyData(nickname, email)) {
             listOfUsers.getUserSet().add(new User(nickname, email, currentCity, friends, cities, visitPoints));

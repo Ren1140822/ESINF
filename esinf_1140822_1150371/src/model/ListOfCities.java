@@ -48,6 +48,10 @@ public class ListOfCities {
     public Set<City> getListOfCities() {
         return listOfCities;
     }
+
+    public void setListOfCities(Set<City> listOfCities) {
+        this.listOfCities = listOfCities;
+    }
     
     public Map<City,User> getMapOfCitiesAndMayorsByDescOrder()
     {

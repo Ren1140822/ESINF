@@ -28,7 +28,7 @@ public class AddCityController {
     {
         if(verifyData(cityName,nrPoints))
         {
-            listOfCities.getListOfCities().add(new City(cityName,latitude,longitude,nrPoints));
+            listOfCities.getListOfCities().add(new City(cityName,nrPoints,latitude,longitude));
             return true;
         }
         return false;

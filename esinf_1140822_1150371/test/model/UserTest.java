@@ -228,35 +228,64 @@ public class UserTest {
 //        fail("The test case is a prototype.");
 //    }
 //
-//    /**
-//     * Test of friendExists method, of class User.
-//     */
-//    @Test
-//    public void testFriendExists() {
-//        System.out.println("friendExists");
-//        User user = null;
-//        User instance = new User();
-//        boolean expResult = false;
-//        boolean result = instance.friendExists(user);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of checkIn method, of class User.
-//     */
-//    @Test
-//    public void testCheckIn() {
-//        System.out.println("checkIn");
-//        City city = null;
-//        User instance = new User();
-//        boolean expResult = false;
-//        boolean result = instance.checkIn(city);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of friendExists method, of class User.
+     */
+    @Test
+    public void testFriendExists() {
+        System.out.println("friendExists");
+        User user = new User();
+        User instance = new User();
+        instance.getFriends().add(user);
+        boolean expResult = true;
+        boolean result = instance.friendExists(user);
+        assertEquals(expResult, result);
+       
+    }
+        @Test
+    public void testFriendExistsFail() {
+        System.out.println("friendExistsFail");
+        User user = new User();
+        City c = new City();
+        user.getCitiesVisited().add(c);
+        user.setEmail("new email");
+        User instance = new User();
+        instance.getFriends().add(user);
+        boolean expResult = false;
+        User newUser = new User();
+        newUser.getCitiesVisited().add(c);
+        boolean result = instance.friendExists(newUser);
+        assertEquals(expResult, result);
+       
+    }
+
+     /**
+     * Test of checkIn method, of class User.
+    * */
+    @Test
+    public void testCheckIn() {
+        System.out.println("checkIn");
+        City city = new City();
+        User instance = new User();
+        instance.getCitiesVisited().add(city);
+        boolean expResult = false;
+        boolean result = instance.checkIn(city);
+        assertEquals(expResult, result);
+      
+    }
+        @Test
+    public void testCheckInPass() {
+        System.out.println("checkIn");
+        City city = new City();
+        User instance = new User();
+        instance.getCitiesVisited().add(city);
+        City city2 = new City();
+        city2.setCityName("city 2");
+        boolean expResult = true;
+        boolean result = instance.checkIn(city2);
+        assertEquals(expResult, result);
+      
+    }
     /**
      * Test of getFriendsByCity method, of class User.
      */

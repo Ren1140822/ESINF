@@ -13,9 +13,9 @@ public class City {
 
     private String cityName;
 
-    private long latitude;
+    private double latitude;
 
-    private long longitude;
+    private  double longitude;
 
     private int numberOfPointsAwarded;
 
@@ -37,7 +37,7 @@ public class City {
         this.mayor = new User();
     }
 
-    public City(String cityName, long latitude, long longitude, int numberOfPointsAwarded) {
+    public City(String cityName,  int numberOfPointsAwarded, double latitude,  double longitude) {
         this.cityName = cityName;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -49,11 +49,11 @@ public class City {
         return cityName;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -87,12 +87,12 @@ public class City {
 
     public boolean equals(Object otherObject) {
 
-        if(this==otherObject)
-        {
-            return true;
+        if (this ==null  || (getClass() != otherObject.getClass())) {
+
+            return false;
         }
         City otherCity = (City)otherObject;
-        return this.cityName.equals(otherCity.cityName) && this.latitude == otherCity.latitude && this.longitude == otherCity.longitude && this.numberOfPointsAwarded == otherCity.numberOfPointsAwarded && this.mayor.equals(otherCity.mayor);
+        return this.getCityName().equals(otherCity.getCityName()) && this.latitude == otherCity.latitude && this.longitude == otherCity.longitude && this.numberOfPointsAwarded == otherCity.numberOfPointsAwarded && this.getMayor().equals(otherCity.getMayor());
     }
     public String toString(){
         return this.cityName;

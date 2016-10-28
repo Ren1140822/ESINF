@@ -7,6 +7,7 @@ package model;
 
 import controller.AddUserController;
 import controller.RemoveUserController;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -61,7 +62,7 @@ public class MainRegistry {
      * @param visitPoints
      * @return 
      */
-    public boolean addUser(String nickname, String email, String currentCity, Set<User> friends,Set<City>cities, int visitPoints) {
+    public boolean addUser(String nickname, String email, String currentCity, Set<User> friends,List<City>cities, int visitPoints) {
 
         AddUserController controller = new AddUserController(this);
         return controller.AddUser(nickname, email, currentCity, friends,cities, visitPoints);

@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import model.City;
+import model.ListOfCities;
 import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -54,7 +55,7 @@ public class InputOutputTest {
         String filePath = "D:\\Cities.txt";
         
         Set<City> expResult = new HashSet();
-        expResult.add(new City("porto",2003,2003,2));
+        expResult.add(new City("porto",221,2003.3321,2));
         Set<City> result = InputOutput.readCityFromFile(filePath);
         boolean isEqual=false;
         for(City city : expResult)
@@ -74,16 +75,23 @@ public class InputOutputTest {
     /**
      * Test of readUsersFromFile method, of class InputOutput.
      */
-//    @Test
-//    public void testReadUsersFromFile() throws Exception {
-//        System.out.println("readUsersFromFile");
-//        String filePath = "";
-//        MainRegistry r = null;
-//        Map<User, City> expResult = null;
-//        Map<User, City> result = InputOutput.readUsersFromFile(filePath, r);
-//        assertEquals(expResult, result);
-//       
-//    }
+    @Test
+    public void testReadUsersFromFile() throws Exception {
+        System.out.println("readUsersFromFile");
+        String cityPath = "D:\\cities10.txt";
+        String filePath = "D:\\users10.txt";
+        MainRegistry r = new MainRegistry();
+        Set<City> cities = InputOutput.readCityFromFile(cityPath);
+       ListOfCities listOfCities = new ListOfCities();
+       listOfCities.setListOfCities(cities);
+       r.setListOfCities(listOfCities);
+       Set<User> expResult =  new HashSet();
+       
+      //TODO, criar set utilizadores com expected result, pelo menos 5
+     Set<User> result = InputOutput.readUsersFromFile(filePath, r);
+        assertEquals(expResult, result);
+       
+    }
 
   
     

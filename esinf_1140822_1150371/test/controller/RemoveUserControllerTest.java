@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import model.MainRegistry;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,7 +52,7 @@ public class RemoveUserControllerTest {
         
         String nick = "user1";
         RemoveUserController instance =this.instance;
-         r.addUser(nick, nick, nick, new HashSet(), new HashSet(), 0);
+         r.addUser(nick, nick, nick, new HashSet(), new LinkedList(), 0);
         boolean expResult = true;
         boolean result = instance.removeUser(nick);
         assertEquals(expResult, result);

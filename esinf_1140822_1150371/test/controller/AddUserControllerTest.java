@@ -6,6 +6,8 @@
 package controller;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import model.City;
 import model.MainRegistry;
@@ -55,7 +57,7 @@ public class AddUserControllerTest {
         String email = "something@something";
         String currentCity = "porto";
         Set<User> friends = new HashSet();
-        Set<City> cities =  new HashSet();
+       List<City> cities =  new LinkedList();
         int visitPoints = 0;
         AddUserController instance = this.instance;
         boolean expResult =true;
@@ -73,7 +75,7 @@ public class AddUserControllerTest {
         String email = "something@something";
         String currentCity = "porto";
         Set<User> friends = new HashSet();
-        Set<City> cities =  new HashSet();
+            List<City> cities =  new LinkedList();
         int visitPoints = 0;
         AddUserController instance = this.instance;
         boolean expResult =false;
