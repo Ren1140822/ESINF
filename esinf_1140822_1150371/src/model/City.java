@@ -69,11 +69,11 @@ public class City {
         this.cityName = cityName;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -94,6 +94,7 @@ public class City {
         City otherCity = (City)otherObject;
         return this.getCityName().equals(otherCity.getCityName()) && this.latitude == otherCity.latitude && this.longitude == otherCity.longitude && this.numberOfPointsAwarded == otherCity.numberOfPointsAwarded && this.getMayor().equals(otherCity.getMayor());
     }
+    
     public String toString(){
         return this.cityName;
     }

@@ -5,7 +5,9 @@
  */
 package model;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -330,6 +332,106 @@ public class UserTest {
         Set<User> result = instance.getFriendsByCity(cityName, numberOfResults);
         assertEquals(expResult, result);
 
+    }
+
+    
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        User u = new User();
+        Object otherObject = u;
+        User instance = u;
+        boolean expResult = true;
+        boolean result = instance.equals(otherObject);
+        assertEquals(expResult, result);
+      
+    }
+
+    /**
+     * Test of addFriend method, of class User.
+     */
+    @Test
+    public void testAddFriend() {
+        System.out.println("addFriend");
+        User user = new User();
+        User instance = new User();
+        boolean expResult = true;
+        boolean result = instance.addFriend(user);
+        assertEquals(expResult, result);
+     
+    }
+
+    /**
+     * Test of removeFriend method, of class User.
+     */
+    @Test
+    public void testRemoveFriend() {
+        System.out.println("removeFriend");
+        User user =  new User();
+        User instance = new User();
+        boolean expResult = false;
+        boolean result = instance.removeFriend(user);
+        assertEquals(expResult, result);
+    
+    }
+
+   
+  
+    /**
+     * Test of getFriendsByCity method, of class User.
+     */
+    @Test
+    public void testGetFriendsByCity_City() {
+        System.out.println("getFriendsByCity");
+        City city = new City();
+        User user = new User();
+        user.getCitiesVisited().add(city);
+        User instance = new User();
+        instance.addFriend(user);
+        Set<User> expResult = new HashSet<>();
+        expResult.add(user);
+        Set<User> result = instance.getFriendsByCity(city);
+        assertEquals(expResult, result);
+        
+    }
+
+    /**
+     * Test of getFriendsByCity method, of class User.
+     */
+    @Test
+    public void testGetFriendsByCity_String() {
+        System.out.println("getFriendsByCity");
+      
+        City city = new City();
+        User user = new User();
+        user.getCitiesVisited().add(city);
+          String cityName = city.getCityName();
+        User instance = new User();
+        instance.addFriend(user);
+        Set<User> expResult = new HashSet<>();
+        expResult.add(user);
+        Set<User> result = instance.getFriendsByCity(city);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getFriendsByCity method, of class User.
+     */
+    @Test
+    public void testGetFriendsByCity_double_double() {
+        System.out.println("getFriendsByCity");
+       
+        City city = new City();
+        User user = new User();
+        user.getCitiesVisited().add(city);
+      double latitude = city.getLatitude();
+        double longitude = city.getLongitude();
+        User instance = new User();
+        instance.addFriend(user);
+        Set<User> expResult = new HashSet<>();
+        expResult.add(user);
+        Set<User> result = instance.getFriendsByCity(city);
+    
     }
 
 }
