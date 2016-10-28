@@ -5,9 +5,11 @@
  */
 package model;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,34 +23,32 @@ public class ListOfUsers {
     private Set<User> userSet;
 
     /**
-     *
+     *Builds instance of this class.
      */
     public ListOfUsers() {
-      
-      
          userSet = new HashSet<>();
     }
 
     /**
-     *
-     * @return
+     *Gets the set of users.
+     * @return a set containing all users
      */
     public Set<User> getUserSet() {
         return userSet;
     }
 
     /**
-     *
-     * @param userSet
+     *Sets the set of users.
+     * @param userSet the user set
      */
     public void setUserSet(Set<User> userSet) {
         this.userSet = userSet;
     }
 
     /**
-     *
-     * @param nick
-     * @return
+     *Gets user object by nickname.
+     * @param nick the user nickname
+     * @return the user if found
      */
     public User getUserByNickname(String nick) {
         for (User user : userSet) {
@@ -60,16 +60,25 @@ public class ListOfUsers {
     }
 
     /**
-     *
-     * @return
+     *Gets most influent users
+     * @return the list of most influent users
      */
-    public User getMostInfluentUser(){
-        User user1= (User)userSet.toArray()[0];
-        for (User user : userSet) {
-            if(user.getFriends().size()>user1.getFriends().size()){
-                user1=user;
+    public List<User> getMostInfluentUsers(int numberOfResults){
+         Comparator<User> comparator = new Comparator<User>() {
+            @Override
+            public int compare(User t, User t1) {
+                return (t.getFriends().size() > t1.getFriends().size()) ? -1 : t.getFriends().size() < t1.getFriends().size()?1:0;
             }
+        };
+       List<User> usersList = new LinkedList();
+        for (User user : userSet) {
+            usersList.add(user);
         }
-        return user1;
+        Collections.sort(usersList,comparator);
+          List<User> limitedUsersList  = new LinkedList();
+          for (int i = 0; i <  numberOfResults+1; i++) {
+            limitedUsersList.add(usersList.get(i));
+        }
+        return limitedUsersList;
     }
 }

@@ -433,5 +433,6 @@ public class UserTest {
         Set<User> result = instance.getFriendsByCity(city);
     
     }
-
+      
+    
 }

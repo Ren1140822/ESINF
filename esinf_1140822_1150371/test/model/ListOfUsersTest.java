@@ -6,6 +6,8 @@
 package model;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,25 +21,27 @@ import static org.junit.Assert.*;
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
 public class ListOfUsersTest {
+
     MainRegistry r;
     ListOfUsers instance;
+
     public ListOfUsersTest() {
         r = new MainRegistry();
         instance = r.getListOfUsers();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -51,10 +55,10 @@ public class ListOfUsersTest {
         Set<User> userSet = new HashSet();
         ListOfUsers instance = this.instance;
         instance.setUserSet(userSet);
-        Set<User> expResult =  userSet;
+        Set<User> expResult = userSet;
         Set<User> result = instance.getUserSet();
         assertEquals(expResult, result);
-     
+
     }
 
     /**
@@ -63,10 +67,10 @@ public class ListOfUsersTest {
     @Test
     public void testSetUserSet() {
         System.out.println("setUserSet");
-      Set<User> userSet = new HashSet();
+        Set<User> userSet = new HashSet();
         ListOfUsers instance = this.instance;
         instance.setUserSet(userSet);
-        boolean isSet = instance.getUserSet()!=null;
+        boolean isSet = instance.getUserSet() != null;
         assertEquals(isSet, true);
     }
 
@@ -83,7 +87,33 @@ public class ListOfUsersTest {
         User expResult = u;
         User result = instance.getUserByNickname(nick);
         assertEquals(expResult, result);
-      
+
     }
-    
+
+    /**
+     * Test of getMostInfluentUsers method, of class ListOfUsers.
+     */
+    @Test
+    public void testGetMostInfluentUsers() {
+        System.out.println("getMostInfluentUsers");
+        int numberOfResults = 2;
+        ListOfUsers instance = new ListOfUsers();
+
+        User user1 = new User();
+        User user2 = new User();
+        User user3 = new User();
+        user1.addFriend(user2);
+        user1.addFriend(user3);
+        List<User> expResult = new LinkedList();
+        expResult.add(user1);
+        expResult.add(user2);
+        expResult.add(user3);
+        instance.getUserSet().add(user1);
+        instance.getUserSet().add(user2);
+        instance.getUserSet().add(user3);
+        List<User> result = instance.getMostInfluentUsers(numberOfResults);
+        assertEquals(expResult, result);
+
+    }
+
 }
