@@ -11,10 +11,25 @@ package model;
  */
 public interface Friendable {
     
+    /**
+     *
+     * @param user
+     * @return
+     */
     public boolean addFriend(User user);
     
+    /**
+     *
+     * @param user
+     * @return
+     */
     public boolean friendExists(User user);
     
+    /**
+     *
+     * @param user
+     * @return
+     */
     public boolean removeFriend(User user);
     
 }

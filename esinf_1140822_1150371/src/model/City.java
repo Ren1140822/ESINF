@@ -29,6 +29,9 @@ public class City {
 
     private static int DEFAULT_NUMBER_OF_POINTS_AWARDED = 0;
 
+    /**
+     *Default constructor.
+     */
     public City() {
         this.cityName = DEFAULT_CITY_NAME;
         this.latitude = DEFAULT_LATITUDE;
@@ -37,6 +40,13 @@ public class City {
         this.mayor = new User();
     }
 
+    /**
+     *City constructor.
+     * @param cityName the city name
+     * @param numberOfPointsAwarded number of points city awards
+     * @param latitude city latitude
+     * @param longitude city longitude
+     */
     public City(String cityName,  int numberOfPointsAwarded, double latitude,  double longitude) {
         this.cityName = cityName;
         this.latitude = latitude;
@@ -45,46 +55,91 @@ public class City {
         this.mayor = new User();
     }
 
+    /**
+     *gets city name
+     * @return the city name
+     */
     public String getCityName() {
         return cityName;
     }
 
+    /**
+     *gets city latitude.
+     * @return the city latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     *gets city longitude.
+     * @return the city longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     *gets number of points this city awards.
+     * @return the number of points
+     */
     public int getNumberOfPointsAwarded() {
         return numberOfPointsAwarded;
     }
 
+    /**
+     *Gets the city mayor.
+     * @return this city mayor
+     */
     public User getMayor() {
         return mayor;
     }
 
+    /**
+     *Sets city name.
+     * @param cityName the city new name
+     */
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
 
+    /**
+     *sets city latitude
+     * @param latitude the latitude
+     */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     *sets city longitude
+     * @param longitude the longitude
+     */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
+    /**
+     *sets number of points awarded
+     * @param numberOfPointsAwarded the number of points
+     */
     public void setNumberOfPointsAwarded(int numberOfPointsAwarded) {
         this.numberOfPointsAwarded = numberOfPointsAwarded;
     }
 
+    /**
+     *sets city mayor
+     * @param mayor the city mayor
+     */
     public void setMayor(User mayor) {
         this.mayor = mayor;
     }
 
+    /**
+     *sees if two cities are equal
+     * @param otherObject the other city
+     * @return true if equal, false otherwise
+     */
     public boolean equals(Object otherObject) {
 
         if (this ==null  || (getClass() != otherObject.getClass())) {
@@ -95,6 +150,10 @@ public class City {
         return this.getCityName().equals(otherCity.getCityName()) && this.latitude == otherCity.latitude && this.longitude == otherCity.longitude && this.numberOfPointsAwarded == otherCity.numberOfPointsAwarded && this.getMayor().equals(otherCity.getMayor());
     }
     
+    /**
+     *
+     * @return
+     */
     public String toString(){
         return this.cityName;
     }

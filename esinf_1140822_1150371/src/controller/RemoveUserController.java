@@ -16,10 +16,19 @@ public class RemoveUserController {
 
     MainRegistry r;
 
+    /**
+     *
+     * @param r
+     */
     public RemoveUserController(MainRegistry r) {
         this.r = r;
     }
 
+    /**
+     *
+     * @param nick
+     * @return
+     */
     public boolean removeUser(String nick) {
         User user = r.getListOfUsers().getUserByNickname(nick);
         if (r.getListOfUsers().getUserSet().contains(user)) {

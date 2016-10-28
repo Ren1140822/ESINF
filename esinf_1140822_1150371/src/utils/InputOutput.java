@@ -20,6 +20,12 @@ import model.User;
  */
 public class InputOutput {
 
+    /**
+     *
+     * @param filePath
+     * @return
+     * @throws FileNotFoundException
+     */
     public static Set<City> readCityFromFile(String filePath) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
         Set<City> cities = new HashSet<City>();
@@ -45,6 +51,13 @@ public class InputOutput {
 
     }
 
+    /**
+     *
+     * @param filePath
+     * @param r
+     * @return
+     * @throws FileNotFoundException
+     */
     public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
         Set<User> users = new HashSet<>();

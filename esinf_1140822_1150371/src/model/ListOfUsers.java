@@ -19,23 +19,37 @@ public class ListOfUsers {
  
 
     private Set<User> userSet;
+
+    /**
+     *
+     */
     public ListOfUsers() {
       
       
          userSet = new HashSet<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<User> getUserSet() {
         return userSet;
     }
 
-
-
+    /**
+     *
+     * @param userSet
+     */
     public void setUserSet(Set<User> userSet) {
         this.userSet = userSet;
     }
 
-
+    /**
+     *
+     * @param nick
+     * @return
+     */
     public User getUserByNickname(String nick) {
         for (User user : userSet) {
             if (user.getNickname().equals(nick)) {
@@ -44,6 +58,11 @@ public class ListOfUsers {
         }
         return null;
     }
+
+    /**
+     *
+     * @return
+     */
     public User getMostInfluentUser(){
         User user1= (User)userSet.toArray()[0];
         for (User user : userSet) {

@@ -17,6 +17,11 @@ public class AddCityController {
     
      MainRegistry r;
     ListOfCities listOfCities;
+
+    /**
+     *This class constructor
+     * @param r the main registry
+     */
     public AddCityController(MainRegistry r)
     {
         this.r=r;
@@ -24,6 +29,14 @@ public class AddCityController {
         
     }
     
+    /**
+     *adds a city to the list
+     * @param cityName the city name
+     * @param latitude the city latitude
+     * @param longitude the city longitude
+     * @param nrPoints the city nr of points
+     * @return
+     */
     public boolean addCity(String cityName,long latitude,long longitude,int nrPoints)
     {
         if(verifyData(cityName,nrPoints))
@@ -34,6 +47,12 @@ public class AddCityController {
         return false;
     }
     
+    /**
+     * Verifies the integrity of city data
+     * @param cityName the city name
+     * @param nrPoints the number of points
+     * @return true if all OK
+     */
     private boolean verifyData(String cityName,int nrPoints)
     {
         for (City city : listOfCities.getListOfCities()) {

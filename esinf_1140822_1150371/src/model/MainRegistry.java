@@ -19,6 +19,9 @@ public class MainRegistry {
     private ListOfCities listOfCities;
     private ListOfUsers listOfUsers;
 
+    /**
+     *
+     */
     public MainRegistry() {
         listOfCities = new ListOfCities();
         listOfUsers = new ListOfUsers();

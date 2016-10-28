@@ -11,5 +11,10 @@ package model;
  */
 public interface Checkinable {
     
+    /**
+     *
+     * @param city
+     * @return
+     */
     public boolean checkIn(City city);
 }

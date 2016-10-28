@@ -291,48 +291,48 @@ public class UserTest {
     /**
      * Test of getFriendsByCity method, of class User.
      */
-    @Test
-    public void testGetFriendsByCity() {
-        System.out.println("getFriendsByCity");
-        User user1 = new User();
-        User user2 = new User();
-        User user3 = new User();
-
-        User thisUser = new User();
-        City c = new City();
-        c.setLatitude(12833333);
-        c.setLongitude(12833333);
-        City c1 = new City();
-
-        c1.setLatitude(2223333);
-        c1.setLongitude(12833333);
-        City c2 = new City();
-        c2.setLatitude(11833333);
-        c2.setLongitude(11833333);
-        City c3 = new City();
-        c3.setLatitude(122832333);
-        c3.setLongitude(122823333);
-        thisUser.getCitiesVisited().add(c);
-        user1.getCitiesVisited().add(c1);
-        user2.getCitiesVisited().add(c2);
-        user3.getCitiesVisited().add(c3);
-        String cityName = c.getCityName();
-        int numberOfResults = 2;
-        User instance = thisUser;
-        user1.setNickname("user1");
-        user2.setNickname("user2");
-        user3.setNickname("user3");
-        instance.getFriends().add(user1);
-        instance.getFriends().add(user2);
-        instance.getFriends().add(user3);
-        Set<User> expResult = new LinkedHashSet<>();
-        expResult.add(user2);
-        expResult.add(user1);
-        expResult.add(user3);
-        Set<User> result = instance.getFriendsByCity(cityName, numberOfResults);
-        assertEquals(expResult, result);
-
-    }
+//    @Test
+//    public void testGetFriendsByCity() {
+//        System.out.println("getFriendsByCity");
+//        User user1 = new User();
+//        User user2 = new User();
+//        User user3 = new User();
+//
+//        User thisUser = new User();
+//        City c = new City();
+//        c.setLatitude(12833333);
+//        c.setLongitude(12833333);
+//        City c1 = new City();
+//
+//        c1.setLatitude(2223333);
+//        c1.setLongitude(12833333);
+//        City c2 = new City();
+//        c2.setLatitude(11833333);
+//        c2.setLongitude(11833333);
+//        City c3 = new City();
+//        c3.setLatitude(122832333);
+//        c3.setLongitude(122823333);
+//        thisUser.getCitiesVisited().add(c);
+//        user1.getCitiesVisited().add(c1);
+//        user2.getCitiesVisited().add(c2);
+//        user3.getCitiesVisited().add(c3);
+//        String cityName = c.getCityName();
+//        int numberOfResults = 2;
+//        User instance = thisUser;
+//        user1.setNickname("user1");
+//        user2.setNickname("user2");
+//        user3.setNickname("user3");
+//        instance.getFriends().add(user1);
+//        instance.getFriends().add(user2);
+//        instance.getFriends().add(user3);
+//        Set<User> expResult = new LinkedHashSet<>();
+//        expResult.add(user2);
+//        expResult.add(user1);
+//        expResult.add(user3);
+//        Set<User> result = instance.getFriendsByCity(cityName, numberOfResults);
+//        assertEquals(expResult, result);
+//
+//    }
 
     
     @Test

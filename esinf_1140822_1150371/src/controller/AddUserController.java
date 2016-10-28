@@ -21,11 +21,25 @@ public class AddUserController {
     MainRegistry r;
     ListOfUsers listOfUsers;
 
+    /**
+     *this class constructor
+     * @param r the main registry
+     */
     public AddUserController(MainRegistry r) {
         this.r = r;
         this.listOfUsers = r.getListOfUsers();
     }
 
+    /**
+     *Adds a new user.
+     * @param nickname the users nickname
+     * @param email the users email
+     * @param currentCity the users current city
+     * @param friends the users friend 
+     * @param cities the users visited city list
+     * @param visitPoints the users current points
+     * @return
+     */
     public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends,List<City> cities, int visitPoints) {
 
         if (verifyData(nickname, email)) {
@@ -35,6 +49,12 @@ public class AddUserController {
         return false;
     }
 
+    /**
+     * Verifies user data integrity.
+     * @param nickname the users nickname
+     * @param email the users email
+     * @return true if all validated
+     */
     private boolean verifyData(String nickname, String email) {
         Set<User> listOfUserss = listOfUsers.getUserSet();
         for (User user : listOfUserss) {
