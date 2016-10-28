@@ -21,9 +21,9 @@ import model.User;
 public class InputOutput {
 
     /**
-     *
-     * @param filePath
-     * @return
+     *Reads cities from a txt file.
+     * @param filePath the file path
+     * @return the set of cities
      * @throws FileNotFoundException
      */
     public static Set<City> readCityFromFile(String filePath) throws FileNotFoundException {
@@ -52,10 +52,10 @@ public class InputOutput {
     }
 
     /**
-     *
-     * @param filePath
-     * @param r
-     * @return
+     *Reads users from a given txt file
+     * @param filePath the file path
+     * @param r the main registry to read cities
+     * @return the list of users
      * @throws FileNotFoundException
      */
     public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
@@ -88,6 +88,12 @@ public class InputOutput {
 
     }
 
+    /**
+     * Gets cities from string ( cities need to be uploaded first).
+     * @param line the line
+     * @param r the main registry
+     * @return  the list of cities
+     */
     private static List<City> getCitiesFromString(String line, MainRegistry r) {
         List<City> cities = new LinkedList<City>();
         String[] splitString = line.split(",");
@@ -98,15 +104,19 @@ public class InputOutput {
         return cities;
     }
 
+    /**
+     * Gets friends from string.
+     * @param line the line
+     * @param r the main registry
+     * @return  the list of friends
+     */
     private static Set<User> getFriendsFromString(String line, MainRegistry r) {
         Set<User> friends = new HashSet<User>();
         String[] splitString = line.split(",");
         for (String string : splitString) {
             User friend = r.getListOfUsers().getUserByNickname(string);
             friends.add(friend);
-
         }
-
         return friends;
     }
 

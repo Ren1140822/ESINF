@@ -20,35 +20,35 @@ public class MainRegistry {
     private ListOfUsers listOfUsers;
 
     /**
-     *
+     *Creates instance of this class.
      */
     public MainRegistry() {
         listOfCities = new ListOfCities();
         listOfUsers = new ListOfUsers();
     }
 
-    /**
+    /**Gets the list of cities class reference
      * @return the ListOfCities
      */
     public ListOfCities getListOfCities() {
         return listOfCities;
     }
 
-    /**
+    /**Sets the list of cities class reference.
      * @param ListOfCities the ListOfCities to set
      */
     public void setListOfCities(ListOfCities ListOfCities) {
         this.listOfCities = ListOfCities;
     }
 
-    /**
+    /**Gets the list of users class reference.
      * @return the listOfUsers
      */
     public ListOfUsers getListOfUsers() {
         return listOfUsers;
     }
 
-    /**
+    /**Sets the list of users class reference.
      * @param listOfUsers the listOfUsers to set
      */
     public void setListOfUsers(ListOfUsers listOfUsers) {
@@ -56,7 +56,7 @@ public class MainRegistry {
     }
 
     /**
-     * Testing purposes.
+     * Testing purposes for junit implementations.
      * @param nickname
      * @param email
      * @param currentCity
