@@ -81,4 +81,20 @@ public class ListOfUsers {
         }
         return limitedUsersList;
     }
+   
+    @Override
+    public boolean equals(Object l2){
+       ListOfUsers aux=(ListOfUsers)l2;
+        if(this==l2){
+            return true;
+        }
+        for (User user : userSet) {
+            for (User user1 : aux.getUserSet()) {
+                if(!user1.equals(userSet)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
