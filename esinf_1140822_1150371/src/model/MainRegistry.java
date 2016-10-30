@@ -91,8 +91,10 @@ public class MainRegistry {
         RemoveUserController controller = new RemoveUserController(this);
         return controller.removeUser(nickname);
     }
+    
+    
 /**
- *  Adds a new city
+ *  Testing purposes - Adds a new city
  * @param cityName the name of the city
  * @param numberOfPointsAwarded points awarded for checking in 
  * @param latitude latitude of the city
@@ -101,7 +103,7 @@ public class MainRegistry {
  */
     public boolean addCity(String cityName, int numberOfPointsAwarded, double latitude, double longitude) {
         for (City object : this.getListOfCities().getListOfCities()) {
-            if (this.getListOfCities().getCityByName(cityName).equals(object)) {
+            if (this.getListOfCities().getCityByName(cityName).equals(object)|| numberOfPointsAwarded<0) {
                 return false;
             }
 
