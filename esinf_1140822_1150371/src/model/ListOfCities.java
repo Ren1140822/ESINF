@@ -97,4 +97,19 @@ public class ListOfCities {
         }
          return mapOfCitiesAndMayorsByDescOrderMap;
     }
+     @Override
+    public boolean equals(Object l2){
+       ListOfCities aux=(ListOfCities)l2;
+        if(this==l2){
+            return true;
+        }
+        for (City city : this.getListOfCities()) {
+            for (City city2 : aux.getListOfCities()) {
+                if(!city.equals(city2)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
