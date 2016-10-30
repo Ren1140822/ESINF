@@ -5,14 +5,11 @@
  */
 package model;
 
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  *
@@ -337,6 +334,20 @@ public class User implements Friendable, Checkinable {
             }
         }
         return friendsNearby;
+    }
+    
+    
+       /**
+     *Returns a description of this object in a string
+     * @return the description
+     */
+    public String toString(){
+        return this.nickname+" "+ this.email+" "+ this.visitPoints ;
+    }
+    
+     @Override
+    public int hashCode() {
+        return Objects.hash(nickname,email,friends,visitPoints,citiesVisited);
     }
 
 }

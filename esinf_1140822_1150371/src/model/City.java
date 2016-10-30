@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
@@ -151,11 +153,15 @@ public class City {
     }
     
     /**
-     *
-     * @return
+     *Returns a description of this object in a string
+     * @return the description
      */
     public String toString(){
-        return this.cityName;
+        return this.cityName+" "+ this.latitude+" "+ this.longitude +" "+ this.mayor.toString() +" "+this.numberOfPointsAwarded;
     }
 
+        @Override
+    public int hashCode() {
+        return Objects.hash(cityName,longitude,latitude,mayor,numberOfPointsAwarded);
+    }
 }
