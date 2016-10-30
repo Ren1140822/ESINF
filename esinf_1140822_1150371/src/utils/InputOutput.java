@@ -6,6 +6,7 @@ package utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -60,7 +61,7 @@ public class InputOutput {
      */
     public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Set<User> users = new HashSet<>();
+        Set<User> users = new LinkedHashSet<>();
         String nickName = "";
         String email = "";
         List<City> cities = new LinkedList();

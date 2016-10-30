@@ -7,6 +7,7 @@ package utils;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -85,13 +86,14 @@ public class InputOutputTest {
         ListOfCities listOfCities = new ListOfCities();
         listOfCities.setListOfCities(cities);
         r.setListOfCities(listOfCities);
-        Set<User> expResult = new HashSet();
+        Set<User> expResult = new LinkedHashSet();
         expResult.add(nick0(r));
         expResult.add(nick1(r));
         expResult.add(nick2(r));
         expResult.add(nick3(r));
         expResult.add(nick4(r));
-        Set<User> result = InputOutput.readUsersFromFile(filePath, r);
+        Set<User> result=new LinkedHashSet();
+        result = InputOutput.readUsersFromFile(filePath, r);
         assertEquals(expResult, result);
 
     }
@@ -118,7 +120,7 @@ public class InputOutputTest {
         friends.add(r.getListOfUsers().getUserByNickname("nick2"));
         friends.add(r.getListOfUsers().getUserByNickname("nick8"));
         User u = new User("nick1", "mail_1_@sapo.pt", null, friends, cities, 0);
-        u.setVisitPoints(u.getVisitPoints());
+        u.setVisitPoints(203);
         return u;
     }
 
@@ -132,7 +134,7 @@ public class InputOutputTest {
         friends.add(r.getListOfUsers().getUserByNickname("nick8"));
         friends.add(r.getListOfUsers().getUserByNickname("nick1"));
         User u = new User("nick2", "mail_2_@sapo.pt", null, friends, cities, 0);
-        u.setVisitPoints(u.getVisitPoints());
+        u.setVisitPoints(109);
         return u;
     }
 
@@ -146,7 +148,7 @@ public class InputOutputTest {
         friends.add(r.getListOfUsers().getUserByNickname("nick6"));
         friends.add(r.getListOfUsers().getUserByNickname("nick5"));
         User u = new User("nick3", "mail_3_@sapo.pt", null, friends, cities, 0);
-        u.setVisitPoints(u.getVisitPoints());
+        u.setVisitPoints(7);
         return u;
     }
 
@@ -158,7 +160,7 @@ public class InputOutputTest {
         friends.add(r.getListOfUsers().getUserByNickname("nick9"));
         friends.add(r.getListOfUsers().getUserByNickname("nick0"));
         User u = new User("nick4", "mail_4_@sapo.pt", null, friends, cities, 0);
-        u.setVisitPoints(u.getVisitPoints());
+        u.setVisitPoints(87);
         return u;
     }
 
