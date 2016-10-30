@@ -94,6 +94,12 @@ public class InputOutputTest {
         expResult.add(nick4(r));
         Set<User> result=new LinkedHashSet();
         result = InputOutput.readUsersFromFile(filePath, r);
+        boolean bool;
+        for (User user : result) {
+            if (user.equals(nick2(r))){
+                
+            }
+        }
         assertEquals(expResult, result);
 
     }
@@ -126,8 +132,9 @@ public class InputOutputTest {
 
     private User nick2(MainRegistry r) {
         List<City> cities = new LinkedList();
-        cities.add(r.getListOfCities().getCityByName("city2"));
+
         cities.add(r.getListOfCities().getCityByName("city0"));
+          cities.add(r.getListOfCities().getCityByName("city2"));
         Set<User> friends = new HashSet();
         friends.add(r.getListOfUsers().getUserByNickname("nick6"));
         friends.add(r.getListOfUsers().getUserByNickname("nick7"));
