@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import model.City;
-import model.MainRegistry;
+import model.SocialNetwork;
 import model.User;
 
 /**
@@ -59,7 +59,7 @@ public class InputOutput {
      * @return the list of users
      * @throws FileNotFoundException
      */
-    public static Set<User> readUsersFromFile(String filePath, MainRegistry r) throws FileNotFoundException {
+    public static Set<User> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
         Set<User> users = new LinkedHashSet<>();
         String nickName = "";
@@ -77,7 +77,7 @@ public class InputOutput {
             Object[] aux = cities.toArray();
             City currentCity = (City) aux[0];
             
-            User newUser = new User(nickName, email, currentCity.getCityName(), friends, cities,0);
+            User newUser = new User(nickName, email, currentCity.getCityName(), cities,0);
             for(City c: newUser.getCitiesVisited()){
                 newUser.setVisitPoints(newUser.getVisitPoints()+c.getNumberOfPointsAwarded());
             }
@@ -95,7 +95,7 @@ public class InputOutput {
      * @param r the main registry
      * @return  the list of cities
      */
-    private static List<City> getCitiesFromString(String line, MainRegistry r) {
+    private static List<City> getCitiesFromString(String line, SocialNetwork r) {
         List<City> cities = new LinkedList<City>();
         String[] splitString = line.split(",");
         for (int i = 2; i < splitString.length; i++) {
@@ -111,7 +111,7 @@ public class InputOutput {
      * @param r the main registry
      * @return  the list of friends
      */
-    private static Set<User> getFriendsFromString(String line, MainRegistry r) {
+    private static Set<User> getFriendsFromString(String line, SocialNetwork r) {
         Set<User> friends = new HashSet<User>();
         String[] splitString = line.split(",");
         for (String string : splitString) {
@@ -121,4 +121,20 @@ public class InputOutput {
         return friends;
     }
 
+    /**
+     * Reads the cities to a graph
+     * @param path the file path
+     * @throws FileNotFoundException 
+     */
+    public static void readCitiesToGraph(String path) throws FileNotFoundException{
+        Scanner scan = new Scanner(new File(path));
+        String line = scan.next();
+        String[] lineSplit = line.split(",");
+        String city1= lineSplit[0];
+        String city2 = lineSplit[1];
+        long distance = Long.parseLong(lineSplit[2]);
+       
+        
+        
+    }
 }

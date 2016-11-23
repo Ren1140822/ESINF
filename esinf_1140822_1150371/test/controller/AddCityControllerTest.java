@@ -5,7 +5,7 @@
  */
 package controller;
 
-import model.MainRegistry;
+import model.SocialNetwork;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,7 +48,7 @@ public class AddCityControllerTest {
         long latitude = 0L;
         long longitude = 0L;
         int nrPoints = 0;
-        AddCityController instance = new AddCityController(new MainRegistry());
+        AddCityController instance = new AddCityController(new SocialNetwork());
         boolean expResult =true;
         boolean result = instance.addCity(cityName, latitude, longitude, nrPoints);
         assertEquals(expResult, result);
@@ -61,7 +61,7 @@ public class AddCityControllerTest {
         long latitude = 0L;
         long longitude = 0L;
         int nrPoints = -1;
-        AddCityController instance = new AddCityController(new MainRegistry());
+        AddCityController instance = new AddCityController(new SocialNetwork());
         boolean expResult =true;
         boolean result = instance.addCity(cityName, latitude, longitude, nrPoints);
         assertEquals(expResult, result);
@@ -74,7 +74,7 @@ public class AddCityControllerTest {
         long latitude = 0L;
         long longitude = 0L;
         int nrPoints = -1;
-        AddCityController instance = new AddCityController(new MainRegistry());
+        AddCityController instance = new AddCityController(new SocialNetwork());
         boolean expResult = false;
         boolean result = instance.addCity(cityName, latitude, longitude, nrPoints);
         result = instance.addCity(cityName, latitude, longitude, nrPoints);

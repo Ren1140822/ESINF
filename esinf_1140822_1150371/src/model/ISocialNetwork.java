@@ -9,13 +9,6 @@ package model;
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
-public interface Checkinable {
+public interface ISocialNetwork {
     
-    /**
-     *
-     * @param city
-     * @return
-     */
-    
-        public boolean checkIn(String user,String city);
 }

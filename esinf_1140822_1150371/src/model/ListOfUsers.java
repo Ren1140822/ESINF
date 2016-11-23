@@ -5,11 +5,13 @@
  */
 package model;
 
+import graphbase.Graph;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,40 +20,35 @@ import java.util.Set;
  */
 public class ListOfUsers {
 
- 
-
-    private Set<User> userSet;
+    private Map<String, User> userMap;
+    private Map<User, Set<User>> friendsMap;
+    Graph<User, Integer> friendsGraph;
 
     /**
-     *Builds instance of this class.
+     * Builds instance of this class.
      */
     public ListOfUsers() {
-         userSet = new HashSet<>();
+        userMap = new HashMap<>();
+        friendsMap = new HashMap<>();
+        friendsGraph = new Graph<User, Integer>(false);
+    }
+
+    public Map<String, User> getUserMap() {
+        return userMap;
+    }
+
+    public Map<User, Set<User>> getFriendsMap() {
+        return friendsMap;
     }
 
     /**
-     *Gets the set of users.
-     * @return a set containing all users
-     */
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    /**
-     *Sets the set of users.
-     * @param userSet the user set
-     */
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
-
-    /**
-     *Gets user object by nickname.
+     * Gets user object by nickname.
+     *
      * @param nick the user nickname
      * @return the user if found
      */
     public User getUserByNickname(String nick) {
-        for (User user : userSet) {
+        for (User user : userMap.values()) {
             if (user.getNickname().equals(nick)) {
                 return user;
             }
@@ -60,41 +57,128 @@ public class ListOfUsers {
     }
 
     /**
-     *Gets most influent users
+     * Gets most influent users
+     *
      * @return the list of most influent users
      */
-    public List<User> getMostInfluentUsers(int numberOfResults){
-         Comparator<User> comparator = new Comparator<User>() {
+    public List<User> getMostInfluentUsers(int numberOfResults) {
+        Comparator<User> comparator = new Comparator<User>() {
             @Override
             public int compare(User t, User t1) {
-                return (t.getFriends().size() > t1.getFriends().size()) ? -1 : t.getFriends().size() < t1.getFriends().size()?1:0;
+                return (friendsMap.get(t).size() > friendsMap.get(t1).size()) ? -1 : friendsMap.get(t).size() < friendsMap.get(t1).size() ? 1 : 0;
             }
         };
-       List<User> usersList = new LinkedList();
-        for (User user : userSet) {
+        List<User> usersList = new LinkedList();
+        for (User user : userMap.values()) {
             usersList.add(user);
         }
-        Collections.sort(usersList,comparator);
-          List<User> limitedUsersList  = new LinkedList();
-          for (int i = 0; i <  numberOfResults+1; i++) {
+        Collections.sort(usersList, comparator);
+        List<User> limitedUsersList = new LinkedList();
+        for (int i = 0; i < numberOfResults + 1; i++) {
             limitedUsersList.add(usersList.get(i));
         }
         return limitedUsersList;
     }
-   
+
     @Override
-    public boolean equals(Object l2){
-       ListOfUsers aux=(ListOfUsers)l2;
-        if(this==l2){
+    public boolean equals(Object l2) {
+        ListOfUsers aux = (ListOfUsers) l2;
+        if (this == l2) {
             return true;
         }
-        for (User user : userSet) {
-            for (User user1 : aux.getUserSet()) {
-                if(!user1.equals(userSet)){
+        for (User user : userMap.values()) {
+            for (User user1 : aux.userMap.values()) {
+                if (!user1.equals(userMap.values())) {
                     return false;
                 }
             }
         }
         return true;
     }
+
+    /**
+     * Adds a friend to this user.
+     *
+     * @param user the user to add
+     * @return true if added sucessfully
+     */
+    public boolean addFriend(String nickname1, String nickname2) {
+        if (!friendExists(nickname1, nickname2)) {
+            if (friendsMap.containsKey(getUserByNickname(nickname1)) && friendsMap.containsKey(getUserByNickname(nickname2))) {
+
+                friendsMap.get(getUserByNickname(nickname1)).add(getUserByNickname(nickname2));
+                friendsMap.get(getUserByNickname(nickname2)).add(getUserByNickname(nickname1));
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addFriendToGraph() {
+        for (User u : friendsMap.keySet()) {
+            friendsGraph.insertVertex(u);
+        }
+        for (User u : friendsMap.keySet()) {
+            for (User u2 : friendsMap.get(u)) {
+                if (friendsGraph.getEdge(u, u2) == null) {
+                    friendsGraph.insertEdge(u, u2, 0, 0);
+                }
+            }
+        }
+        return true;
+    }
+
+    public Iterable<User> getRelationshipDistance(String nickname1, String nickname2) {
+        LinkedList<User> users = new LinkedList<>();
+        graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
+
+        return users;
+    }
+
+    public Iterable<User> findUsersWithinRelationshipDistance(String nickname1, int distance) {
+        LinkedList<User> users = new LinkedList<>();
+        LinkedList<User> usersReturn = new LinkedList<>();
+        User usr = getUserByNickname(nickname1);
+        users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr,distance);
+       
+        
+        return usersReturn;
+    }
+
+    /**
+     * Removes a friend of this user.
+     *
+     * @param user the user to remove
+     * @return true if removed sucessfully
+     */
+    public boolean removeFriend(String nickname1, String nickname2) {
+        if (friendExists(nickname1, nickname2)) {
+            if (friendsMap.containsKey(getUserByNickname(nickname1)) && friendsMap.containsKey(getUserByNickname(nickname2))) {
+
+                friendsMap.get(getUserByNickname(nickname1)).remove(getUserByNickname(nickname2));
+                friendsMap.get(getUserByNickname(nickname2)).remove(getUserByNickname(nickname1));
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sees if friend exists on this users list.
+     *
+     * @param user the friend to check for
+     * @return true if exists
+     */
+    public boolean friendExists(String nickname1, String nickname2) {
+
+        User user1 = getUserByNickname(nickname1);
+        User user2 = getUserByNickname(nickname2);
+        if (friendsMap.containsKey(user1)) {
+            return friendsMap.get(user1).contains(user2);
+        }
+        return false;
+    }
+
 }

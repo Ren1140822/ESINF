@@ -7,7 +7,7 @@ package controller;
 
 import model.City;
 import model.ListOfCities;
-import model.MainRegistry;
+import model.SocialNetwork;
 
 /**
  *
@@ -15,14 +15,14 @@ import model.MainRegistry;
  */
 public class AddCityController {
     
-     MainRegistry r;
+     SocialNetwork r;
     ListOfCities listOfCities;
 
     /**
      *This class constructor
      * @param r the main registry
      */
-    public AddCityController(MainRegistry r)
+    public AddCityController(SocialNetwork r)
     {
         this.r=r;
         this.listOfCities = r.getListOfCities();
@@ -41,7 +41,7 @@ public class AddCityController {
     {
         if(verifyData(cityName,nrPoints))
         {
-            listOfCities.getListOfCities().add(new City(cityName,nrPoints,latitude,longitude));
+            listOfCities.getListOfCities().put(cityName,new City(cityName,nrPoints,latitude,longitude));
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ public class AddCityController {
      */
     private boolean verifyData(String cityName,int nrPoints)
     {
-        for (City city : listOfCities.getListOfCities()) {
+        for (City city : listOfCities.getListOfCities().values()) {
             if(city.getCityName().equals(cityName)||nrPoints<0)
             {
                 return false;

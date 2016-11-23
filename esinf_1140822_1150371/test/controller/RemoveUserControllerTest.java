@@ -7,7 +7,7 @@ package controller;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import model.MainRegistry;
+import model.SocialNetwork;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,10 +20,10 @@ import static org.junit.Assert.*;
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
 public class RemoveUserControllerTest {
-    MainRegistry r ;
+    SocialNetwork r ;
     RemoveUserController instance;
     public RemoveUserControllerTest() {
-        r= new MainRegistry();
+        r= new SocialNetwork();
         instance= new RemoveUserController(r);
     }
     

@@ -5,7 +5,7 @@
  */
 package controller;
 
-import model.MainRegistry;
+import model.SocialNetwork;
 import model.User;
 
 /**
@@ -14,13 +14,13 @@ import model.User;
  */
 public class RemoveUserController {
 
-    MainRegistry r;
+    SocialNetwork r;
 
     /**
      *
      * @param r
      */
-    public RemoveUserController(MainRegistry r) {
+    public RemoveUserController(SocialNetwork r) {
         this.r = r;
     }
 
@@ -31,8 +31,8 @@ public class RemoveUserController {
      */
     public boolean removeUser(String nick) {
         User user = r.getListOfUsers().getUserByNickname(nick);
-        if (r.getListOfUsers().getUserSet().contains(user)) {
-            r.getListOfUsers().getUserSet().remove(user);
+        if (r.getListOfUsers().getUserMap().values().contains(user)) {
+            r.getListOfUsers().getUserMap().values().remove(user);
             return true;
         }
         return false;

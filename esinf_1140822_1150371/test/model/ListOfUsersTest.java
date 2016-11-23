@@ -22,11 +22,11 @@ import static org.junit.Assert.*;
  */
 public class ListOfUsersTest {
 
-    MainRegistry r;
+    SocialNetwork r;
     ListOfUsers instance;
 
     public ListOfUsersTest() {
-        r = new MainRegistry();
+        r = new SocialNetwork();
         instance = r.getListOfUsers();
     }
 

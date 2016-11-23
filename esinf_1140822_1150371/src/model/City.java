@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -22,6 +24,8 @@ public class City {
     private int numberOfPointsAwarded;
 
     private User mayor;
+    
+    private Map<User,Integer> userPointsMap;
 
     private static String DEFAULT_CITY_NAME = "No name";
 
@@ -55,6 +59,7 @@ public class City {
         this.longitude = longitude;
         this.numberOfPointsAwarded = numberOfPointsAwarded;
         this.mayor = new User();
+        userPointsMap  = new HashMap();
     }
 
     /**
@@ -163,5 +168,22 @@ public class City {
         @Override
     public int hashCode() {
         return Objects.hash(cityName,longitude,latitude,mayor,numberOfPointsAwarded);
+    }
+    
+    /**
+     * Updates mayor
+     * @param u
+     * @return 
+     */
+    public boolean updateMayor(User u){
+        for (User usr : userPointsMap.keySet()) {
+            if(usr.equals(u)){
+                if(userPointsMap.get(u).intValue()>userPointsMap.get(mayor).intValue()){
+                    this.mayor = u;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author Jose Silva <1150371@isep.ipp.pt>
  */
-public class MainRegistryTest {
+public class SocialNetworkTest {
     
-    public MainRegistryTest() {
+    public SocialNetworkTest() {
     }
     
     @BeforeClass
@@ -40,12 +40,12 @@ public class MainRegistryTest {
     }
 
     /**
-     * Test of getListOfCities method, of class MainRegistry.
+     * Test of getListOfCities method, of class SocialNetwork.
      */
     @Test
     public void testGetListOfCities() {
         System.out.println("getListOfCities");
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         ListOfCities expResult = new ListOfCities();
         ListOfCities result = instance.getListOfCities();
         assertEquals(expResult, result);
@@ -53,24 +53,24 @@ public class MainRegistryTest {
     }
 
     /**
-     * Test of setListOfCities method, of class MainRegistry.
+     * Test of setListOfCities method, of class SocialNetwork.
      */
     @Test
     public void testSetListOfCities() {
         System.out.println("setListOfCities");
         ListOfCities ListOfCities = null;
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         instance.setListOfCities(ListOfCities);
        
     }
 
     /**
-     * Test of getListOfUsers method, of class MainRegistry.
+     * Test of getListOfUsers method, of class SocialNetwork.
      */
     @Test
     public void testGetListOfUsers() {
         System.out.println("getListOfUsers");
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         ListOfUsers expResult = new ListOfUsers();
         ListOfUsers result = instance.getListOfUsers();
         assertEquals(expResult, result);
@@ -78,19 +78,19 @@ public class MainRegistryTest {
     }
 
     /**
-     * Test of setListOfUsers method, of class MainRegistry.
+     * Test of setListOfUsers method, of class SocialNetwork.
      */
     @Test
     public void testSetListOfUsers() {
         System.out.println("setListOfUsers");
         ListOfUsers listOfUsers = null;
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         instance.setListOfUsers(listOfUsers);
        
     }
 
     /**
-     * Test of addUser method, of class MainRegistry.
+     * Test of addUser method, of class SocialNetwork.
      */
     @Test
     public void testAddUser() {
@@ -101,7 +101,7 @@ public class MainRegistryTest {
         Set<User> friends = null;
         List<City> cities = null;
         int visitPoints = 0;
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         boolean expResult = true;
         boolean result = instance.addUser(nickname, email, currentCity, friends, cities, visitPoints);
         assertEquals(expResult, result);
@@ -109,13 +109,13 @@ public class MainRegistryTest {
     }
 
     /**
-     * Test of removeUser method, of class MainRegistry.
+     * Test of removeUser method, of class SocialNetwork.
      */
     @Test
     public void testRemoveUser() {
         System.out.println("removeUser");
         String nickname = "";
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         boolean expResult = false;
         boolean result = instance.removeUser(nickname);
         assertEquals(expResult, result);
@@ -123,7 +123,7 @@ public class MainRegistryTest {
     }
 
     /**
-     * Test of addCity method, of class MainRegistry.
+     * Test of addCity method, of class SocialNetwork.
      */
     @Test
     public void testAddCity() {
@@ -132,7 +132,7 @@ public class MainRegistryTest {
         int numberOfPointsAwarded = 0;
         double latitude = 0.0;
         double longitude = 0.0;
-        MainRegistry instance = new MainRegistry();
+        SocialNetwork instance = new SocialNetwork();
         boolean expResult = true;
         boolean result = instance.addCity(cityName, numberOfPointsAwarded, latitude, longitude);
         assertEquals(expResult, result);

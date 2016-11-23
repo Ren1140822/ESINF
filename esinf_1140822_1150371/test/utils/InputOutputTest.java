@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import model.MainRegistry;
+import model.SocialNetwork;
 
 /**
  *
@@ -81,7 +81,7 @@ public class InputOutputTest {
         System.out.println("readUsersFromFile");
         String cityPath = "D:\\cities10.txt";
         String filePath = "D:\\users10.txt";
-        MainRegistry r = new MainRegistry();
+        SocialNetwork r = new SocialNetwork();
         Set<City> cities = InputOutput.readCityFromFile(cityPath);
         ListOfCities listOfCities = new ListOfCities();
         listOfCities.setListOfCities(cities);
@@ -104,7 +104,7 @@ public class InputOutputTest {
 
     }
 
-    private User nick0(MainRegistry r) {
+    private User nick0(SocialNetwork r) {
         List<City> cities = new LinkedList();
         cities.add(r.getListOfCities().getCityByName("city4"));
         cities.add(r.getListOfCities().getCityByName("city6"));
@@ -116,7 +116,7 @@ public class InputOutputTest {
         return u;
     }
 
-    private User nick1(MainRegistry r) {
+    private User nick1(SocialNetwork r) {
         List<City> cities = new LinkedList();
         cities.add(r.getListOfCities().getCityByName("city5"));
         cities.add(r.getListOfCities().getCityByName("city9"));
@@ -130,7 +130,7 @@ public class InputOutputTest {
         return u;
     }
 
-    private User nick2(MainRegistry r) {
+    private User nick2(SocialNetwork r) {
         List<City> cities = new LinkedList();
 
         cities.add(r.getListOfCities().getCityByName("city0"));
@@ -145,7 +145,7 @@ public class InputOutputTest {
         return u;
     }
 
-    private User nick3(MainRegistry r) {
+    private User nick3(SocialNetwork r) {
         List<City> cities = new LinkedList();
         cities.add(r.getListOfCities().getCityByName("city8"));
         Set<User> friends = new HashSet();
@@ -159,7 +159,7 @@ public class InputOutputTest {
         return u;
     }
 
-    private User nick4(MainRegistry r) {
+    private User nick4(SocialNetwork r) {
         List<City> cities = new LinkedList();
         cities.add(r.getListOfCities().getCityByName("city6"));
         cities.add(r.getListOfCities().getCityByName("city8"));

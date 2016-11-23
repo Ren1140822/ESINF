@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import model.City;
-import model.MainRegistry;
+import model.SocialNetwork;
 import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,10 +24,10 @@ import static org.junit.Assert.*;
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
 public class AddUserControllerTest {
-    MainRegistry r;
+    SocialNetwork r;
     AddUserController instance;
     public AddUserControllerTest() {
-        r = new MainRegistry();
+        r = new SocialNetwork();
         instance = new AddUserController(r);
     }
     

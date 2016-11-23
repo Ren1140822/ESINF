@@ -8,24 +8,23 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
  * @author Jose Silva <1150371@isep.ipp.pt>
  */
 public class ListOfCities {
+    private Map<String,City> listOfCities;
 
-    private Set<City> listOfCities;
 
     /**
      *builds instance of this class.
      */
     public ListOfCities() {
-        listOfCities = new HashSet<City>();
+        listOfCities = new HashMap<String,City>();
     }
     
     /**
@@ -34,9 +33,18 @@ public class ListOfCities {
      * @return the city if it exists
      */
     public City getCityByName(String cityName){
-        for (City city : listOfCities) {
+        for (City city : listOfCities.values()) {
             if(city.getCityName().equals(cityName)){
                 return city;
+            }
+        }
+        return null;
+    }
+    
+    public City getCityByCoordinates(double lat,double lon){
+        for (City c : listOfCities.values()) {
+            if(c.getLatitude()==lat&&c.getLongitude() == lon){
+                return c;
             }
         }
         return null;
@@ -47,10 +55,10 @@ public class ListOfCities {
      * @param user the username
      * @return the city if found
      */
-    public City getCityByUser(User user)
+    public City getCityByUser(String nick)
     {
-        for (City city : listOfCities) {
-            if(city.getMayor().equals(user))
+        for (City city : listOfCities.values()) {
+            if(city.getMayor().getNickname().equals(nick))
             {
                 return city;
             }
@@ -62,7 +70,7 @@ public class ListOfCities {
      *Gets list of cities.
      * @return the list of cities
      */
-    public Set<City> getListOfCities() {
+    public Map<String,City> getListOfCities() {
         return listOfCities;
     }
 
@@ -70,7 +78,7 @@ public class ListOfCities {
      *Sets list of cities.
      * @param listOfCities the list of sities
      */
-    public void setListOfCities(Set<City> listOfCities) {
+    public void setListOfCities(Map<String, City> listOfCities) {
         this.listOfCities = listOfCities;
     }
     
@@ -82,8 +90,9 @@ public class ListOfCities {
     {
          Map<City,User> mapOfCitiesAndMayorsByDescOrderMap = new LinkedHashMap();
          ArrayList<User> usersList = new ArrayList();
-         for (City city : listOfCities) {
+         for (City city : listOfCities.values()) {
             usersList.add(city.getMayor());
+            
         }
          Comparator<User> comparator = new Comparator<User>() {
              @Override
@@ -93,7 +102,7 @@ public class ListOfCities {
          };
          Collections.sort(usersList, comparator);
          for (User user : usersList) {
-            mapOfCitiesAndMayorsByDescOrderMap.put(getCityByUser(user), user);
+            mapOfCitiesAndMayorsByDescOrderMap.put(getCityByUser(user.getNickname()), user);
         }
          return mapOfCitiesAndMayorsByDescOrderMap;
     }
@@ -103,8 +112,8 @@ public class ListOfCities {
         if(this==l2){
             return true;
         }
-        for (City city : this.getListOfCities()) {
-            for (City city2 : aux.getListOfCities()) {
+        for (City city : this.getListOfCities().values()) {
+            for (City city2 : aux.getListOfCities().values()) {
                 if(!city.equals(city2)){
                     return false;
                 }
@@ -112,4 +121,6 @@ public class ListOfCities {
         }
         return true;
     }
+    
+    
 }

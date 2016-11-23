@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
-public class User implements Friendable, Checkinable {
+public class User  {
 
     private String nickname;
 
@@ -23,7 +23,7 @@ public class User implements Friendable, Checkinable {
 
     private City currentCity;
 
-    private Set<User> friends;
+ 
 
     private List<City> citiesVisited;
 
@@ -41,7 +41,7 @@ public class User implements Friendable, Checkinable {
     public User() {
         this.nickname = DEFAULT_NICKNAME;
         this.email = DEFAULT_EMAIL;
-        this.friends = new HashSet<User>();
+      
         this.citiesVisited = new LinkedList<City>();
         this.visitPoints = DEFAULT_VISIT_POINTS;
 
@@ -56,10 +56,10 @@ public class User implements Friendable, Checkinable {
      * @param citiesVisited the cities visited
      * @param visitPoints   visit points
      */
-    public User(String nickname, String email, String currentCity, Set<User> friends, List<City> citiesVisited, int visitPoints) {
+    public User(String nickname, String email, String currentCity,  List<City> citiesVisited, int visitPoints) {
         this.nickname = nickname;
         this.email = email;
-        this.friends = friends;
+     
         this.citiesVisited = citiesVisited;
         this.visitPoints = visitPoints;
 
@@ -101,21 +101,7 @@ public class User implements Friendable, Checkinable {
         this.currentCity = currentCity;
     }
 
-    /**
-     *Gets the user's friends.
-     * @return a set with users
-     */
-    public Set<User> getFriends() {
-        return friends;
-    }
-
-    /**
-     *Sets the users friends.
-     * @param friends a set of users
-     */
-    public void setFriends(Set<User> friends) {
-        this.friends = friends;
-    }
+   
 
     /**
      *Gets visit points.
@@ -169,70 +155,25 @@ public class User implements Friendable, Checkinable {
             return false;
         }
         User otherUser = (User) otherObject;
-        boolean ret = this.getNickname().equals(otherUser.getNickname()) && this.getEmail().equals(otherUser.getEmail()) && this.getFriends().equals(otherUser.getFriends()) && this.getVisitPoints() == otherUser.getVisitPoints();
+        boolean ret = this.getNickname().equals(otherUser.getNickname()) && this.getEmail().equals(otherUser.getEmail())  && this.getVisitPoints() == otherUser.getVisitPoints();
         if (this.citiesVisited.size() > 0 && otherUser.citiesVisited.size() > 0 && ret == true) {
             ret = this.getCurrentCity().equals(otherUser.getCurrentCity());
         }
         return ret;
     }
 
-    /**
-     *Adds a friend to this user.
-     * @param user the user to add
-     * @return true if added sucessfully
-     */
-    @Override
-    public boolean addFriend(User user) {
-        if (!friendExists(user)) {
-            this.friends.add(user);
-            user.friends.add(this);
-            return true;
-        }
-        return false;
-    }
+  
 
     /**
-     *Removes a friend of this user.
-     * @param user the user to remove
-     * @return true if removed sucessfully
-     */
-    @Override
-    public boolean removeFriend(User user) {
-        if (friendExists(user)) {
-            this.friends.remove(user);
-            user.friends.remove(this);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *Sees if friend exists on this users list.
-     * @param user the friend to check for
-     * @return true if exists
-     */
-    @Override
-    public boolean friendExists(User user) {
-        for (User friend : friends) {
-            if (friend.equals(user)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     *Checks in a city, interface implementation.
+     *Checks in a city.
      * @param city the city to check in for
      * @return true if checked in sucessfully false otherwise.
      */
-    @Override
-    public boolean checkIn(City city) {
+  
+    public boolean checkIn(City city) {//TODO: ALTERAR
         if (!this.getCurrentCity().equals(city)) {
             this.visitPoints += city.getNumberOfPointsAwarded();
-            if (city.getMayor().getVisitPoints() < this.visitPoints) {
-                city.setMayor(this);
-            }
+          
             this.citiesVisited.add(city);
             return true;
         }
@@ -241,100 +182,7 @@ public class User implements Friendable, Checkinable {
 
 
 
-//    /**
-//     *
-//     * @param cityName
-//     * @param numberOfResults
-//     * @return
-//     */
-//    public Set<User> getFriendsByCity(String cityName, int numberOfResults) {
-//
-//        Set<User> friends = new LinkedHashSet();
-//        double thisLatitude = this.getCurrentCity().getLatitude();
-//        double thisLongitude = this.getCurrentCity().getLongitude();
-//
-//        Set<User> actualFriends = getFriends();
-//        Comparator<Double> comparator = new Comparator<Double>() {
-//            @Override
-//            public int compare(Double t, Double t1) {
-//                return (t > t1) ? 1 : t < t1 ? -1 : 0;
-//            }
-//        };
-//
-//        Map<Double, User> mapNearbyUsers = new TreeMap<>(comparator);
-//
-//        for (User friend : actualFriends) {
-//            if (friend.getCurrentCity().getCityName().equals(cityName)) {
-//                double otherLatitude = friend.getCurrentCity().getLatitude();
-//                double otherLongitude = friend.getCurrentCity().getLongitude();
-//                double differenceLatitude = Math.abs(thisLatitude - otherLatitude);
-//                double differenceLongitude = Math.abs(thisLongitude - otherLongitude);
-//                double sum = differenceLatitude + differenceLongitude;
-//                mapNearbyUsers.put(sum, friend);
-//
-//            }
-//        }
-//        int index = 0;
-//        for (User user : mapNearbyUsers.values()) {
-//            if (index >= numberOfResults) {
-//                break;
-//            }
-//            friends.add(user);
-//        }
-//        return friends;
-//    }
 
-    /**
-     *Gets user's friends by city object.
-     * @param city the city to check
-     * @return the list of friends
-     */
-    public Set<User> getFriendsByCity(City city) {
-        Set<User> friendsNearby = new HashSet();
-        for (User friend : friends) {
-            if (friend.getCurrentCity() != null) {
-                if (friend.getCurrentCity().equals(city)) {
-                    friendsNearby.add(friend);
-                }
-            }
-        }
-        return friendsNearby;
-    }
-
-   /**
-     *Gets user's friends by city name.
-     * @param cityName the city name to check
-     * @return the list of friends
-     */
-    public Set<User> getFriendsByCity(String cityName) {
-        Set<User> friendsNearby = new HashSet();
-        for (User friend : friends) {
-            if (friend.getCurrentCity() != null) {
-                if (friend.getCurrentCity().getCityName().equals(cityName)) {
-                    friendsNearby.add(friend);
-                }
-            }
-        }
-        return friendsNearby;
-    }
-
-    /**
-     *Gets user's friends by coordinated.
-     * @param latitude the latitude
-     * @param longitude the longitude
-     * @return the user's friends
-     */
-    public Set<User> getFriendsByCity(double latitude, double longitude) {
-        Set<User> friendsNearby = new HashSet();
-        for (User friend : friends) {
-            if (friend.getCurrentCity() != null) {
-                if (friend.getCurrentCity().getLatitude() == latitude && friend.getCurrentCity().getLongitude() == longitude) {
-                    friendsNearby.add(friend);
-                }
-            }
-        }
-        return friendsNearby;
-    }
     
     
        /**
@@ -347,7 +195,7 @@ public class User implements Friendable, Checkinable {
     
      @Override
     public int hashCode() {
-        return Objects.hash(nickname,email,friends,visitPoints,citiesVisited);
+        return Objects.hash(nickname,email,visitPoints,citiesVisited);
     }
 
 }

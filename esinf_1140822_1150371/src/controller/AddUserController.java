@@ -6,10 +6,11 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import model.City;
 import model.ListOfUsers;
-import model.MainRegistry;
+import model.SocialNetwork;
 import model.User;
 
 /**
@@ -18,14 +19,14 @@ import model.User;
  */
 public class AddUserController {
 
-    MainRegistry r;
+    SocialNetwork r;
     ListOfUsers listOfUsers;
 
     /**
      *this class constructor
      * @param r the main registry
      */
-    public AddUserController(MainRegistry r) {
+    public AddUserController(SocialNetwork r) {
         this.r = r;
         this.listOfUsers = r.getListOfUsers();
     }
@@ -40,10 +41,19 @@ public class AddUserController {
      * @param visitPoints the users current points
      * @return
      */
-    public boolean AddUser(String nickname, String email, String currentCity, Set<User> friends,List<City> cities, int visitPoints) {
+    public boolean AddUser(String nickname, String email, String currentCity,List<City> cities, int visitPoints) {
 
         if (verifyData(nickname, email)) {
-            listOfUsers.getUserSet().add(new User(nickname, email, currentCity, friends, cities, visitPoints));
+            User u = (new User(nickname, email, currentCity,  cities, visitPoints));
+            for(User usr :this.listOfUsers.getUserMap().values())
+            {
+                listOfUsers.addFriend(u.getNickname(), usr.getNickname());
+            }
+            for(City c : cities)
+            {
+               r.checkIn(nickname, c.getCityName());
+            }
+            listOfUsers.getUserMap().put(u.getNickname(),u);
             return true;
         }
         return false;
@@ -56,8 +66,8 @@ public class AddUserController {
      * @return true if all validated
      */
     private boolean verifyData(String nickname, String email) {
-        Set<User> listOfUserss = listOfUsers.getUserSet();
-        for (User user : listOfUserss) {
+     Map<String,User> listOfUserss = listOfUsers.getUserMap();
+        for (User user : listOfUserss.values()) {
             if (user.getNickname().equals(nickname) || user.getEmail().equals(email)) {
                 return false;
             }
