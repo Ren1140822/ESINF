@@ -129,21 +129,39 @@ public class ListOfUsers {
         return true;
     }
 
-    public Iterable<User> getRelationshipDistance(String nickname1, String nickname2) {
+    public int getRelationshipDistance(String nickname1, String nickname2) {
         LinkedList<User> users = new LinkedList<>();
         graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
 
-        return users;
+        return users.size();
     }
 
     public Iterable<User> findUsersWithinRelationshipDistance(String nickname1, int distance) {
         LinkedList<User> users = new LinkedList<>();
         LinkedList<User> usersReturn = new LinkedList<>();
         User usr = getUserByNickname(nickname1);
-        users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr,distance);
-       
-        
+        users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr, distance);
         return usersReturn;
+    }
+
+    public Iterable<User> findUsersWithGreatestRelationshipDistance() {
+        int maxDistance = 0;
+        LinkedList<User> usersFarthestAway = new LinkedList<>();
+        for (User u : friendsGraph.allkeyVerts()) {
+            for (User u2 : friendsGraph.allkeyVerts()) {
+                LinkedList<User> users = new LinkedList<>();
+                if (!u.equals(u2)) {
+                    graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(u.getNickname()), getUserByNickname(u2.getNickname()), users);
+                    if (users.size() > maxDistance) {
+                        usersFarthestAway.clear();
+                        usersFarthestAway.add(u);
+                        usersFarthestAway.add(u2);
+                        maxDistance = users.size();
+                    }
+                }
+            }
+        }
+        return  usersFarthestAway;
     }
 
     /**
