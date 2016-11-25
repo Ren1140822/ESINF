@@ -9,6 +9,7 @@ import graphbase.Graph;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,25 @@ public class ListOfUsers {
         return userMap;
     }
 
+    public void setUserMap(Map<String, User> userMap) {
+        this.userMap = userMap;
+
+    }
+
+    public void setFriendsMap(Map<User, Set<User>> friendsMap) {
+        this.friendsMap = friendsMap;
+    }
+
+    public void setFriendsGraph(Graph<User, Integer> friendsGraph) {
+        this.friendsGraph = friendsGraph;
+    }
+
     public Map<User, Set<User>> getFriendsMap() {
         return friendsMap;
+    }
+
+    public Graph<User, Integer> getFriendsGraph() {
+        return friendsGraph;
     }
 
     /**
@@ -104,13 +122,20 @@ public class ListOfUsers {
      */
     public boolean addFriend(String nickname1, String nickname2) {
         if (!friendExists(nickname1, nickname2)) {
-            if (friendsMap.containsKey(getUserByNickname(nickname1)) && friendsMap.containsKey(getUserByNickname(nickname2))) {
+            if (!friendsMap.containsKey(getUserByNickname(nickname1))) {
 
-                friendsMap.get(getUserByNickname(nickname1)).add(getUserByNickname(nickname2));
-                friendsMap.get(getUserByNickname(nickname2)).add(getUserByNickname(nickname1));
-
-                return true;
+                friendsMap.put(getUserByNickname(nickname1), new HashSet<User>());
             }
+            if (!friendsMap.containsKey(getUserByNickname(nickname2))) {
+
+                friendsMap.put(getUserByNickname(nickname2), new HashSet<User>());
+            }
+
+            friendsMap.get(getUserByNickname(nickname1)).add(getUserByNickname(nickname2));
+            friendsMap.get(getUserByNickname(nickname2)).add(getUserByNickname(nickname1));
+
+            return true;
+
         }
         return false;
     }
@@ -122,7 +147,7 @@ public class ListOfUsers {
         for (User u : friendsMap.keySet()) {
             for (User u2 : friendsMap.get(u)) {
                 if (friendsGraph.getEdge(u, u2) == null) {
-                    friendsGraph.insertEdge(u, u2, 0, 0);
+                    friendsGraph.insertEdge(u, u2, 0, 1);
                 }
             }
         }
@@ -138,17 +163,17 @@ public class ListOfUsers {
 
     public Iterable<User> findUsersWithinRelationshipDistance(String nickname1, int distance) {
         LinkedList<User> users = new LinkedList<>();
-        LinkedList<User> usersReturn = new LinkedList<>();
+ 
         User usr = getUserByNickname(nickname1);
         users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr, distance);
-        return usersReturn;
+        return users;
     }
 
     public Iterable<User> findUsersWithGreatestRelationshipDistance() {
         int maxDistance = 0;
         LinkedList<User> usersFarthestAway = new LinkedList<>();
-        for (User u : friendsGraph.allkeyVerts()) {
-            for (User u2 : friendsGraph.allkeyVerts()) {
+        for (User u : friendsGraph.vertices()) {
+            for (User u2 : friendsGraph.vertices()) {
                 LinkedList<User> users = new LinkedList<>();
                 if (!u.equals(u2)) {
                     graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(u.getNickname()), getUserByNickname(u2.getNickname()), users);
@@ -161,7 +186,20 @@ public class ListOfUsers {
                 }
             }
         }
-        return  usersFarthestAway;
+        return usersFarthestAway;
+    }
+      public Iterable<User> findUsersWithFriendsInCommon(String nick1,String nick2)
+      {
+          LinkedList<User>friendsInCommon = new LinkedList<>();
+          User u = getUserByNickname(nick1);
+          User u2 = getUserByNickname(nick2);
+         friendsInCommon= graphbase.GraphAlgorithms.getCommonDirectVertices(friendsGraph, u, u2);
+         return friendsInCommon;
+      }
+    
+    public User findMostInfluentialUser()
+    {
+        return graphbase.GraphAlgorithms.graphCentrality(friendsGraph);
     }
 
     /**

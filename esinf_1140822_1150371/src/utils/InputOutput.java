@@ -5,10 +5,12 @@ package utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import model.City;
@@ -27,9 +29,9 @@ public class InputOutput {
      * @return the set of cities
      * @throws FileNotFoundException
      */
-    public static Set<City> readCityFromFile(String filePath) throws FileNotFoundException {
+    public static Map<String,City> readCityFromFile(String filePath) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Set<City> cities = new HashSet<City>();
+        Map<String,City> cities = new HashMap<String,City>();
         String cityName;
         int cityPoints;
        double latitude;
@@ -44,7 +46,7 @@ public class InputOutput {
             latitude = Double.parseDouble(splitString[2]);
 
             City tmpCity = new City(cityName,cityPoints,latitude, longitude);
-            cities.add(tmpCity);
+            cities.put(tmpCity.getCityName(),tmpCity);
 
         }
 
@@ -59,9 +61,9 @@ public class InputOutput {
      * @return the list of users
      * @throws FileNotFoundException
      */
-    public static Set<User> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
+    public static    Map<String, User>  readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Set<User> users = new LinkedHashSet<>();
+       Map<String, User> userMap = new LinkedHashMap<>();
         String nickName = "";
         String email = "";
         List<City> cities = new LinkedList();
@@ -81,11 +83,11 @@ public class InputOutput {
             for(City c: newUser.getCitiesVisited()){
                 newUser.setVisitPoints(newUser.getVisitPoints()+c.getNumberOfPointsAwarded());
             }
-            users.add(newUser);
+            userMap.put(newUser.getNickname(), newUser);
 
         }
 
-        return users;
+        return userMap;
 
     }
 
