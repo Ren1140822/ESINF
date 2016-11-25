@@ -3,8 +3,12 @@
  */
 package utils;
 
+import graphMatrizAdj.AdjacencyMatrixGraph;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -138,5 +142,39 @@ public class InputOutput {
        
         
         
+    }
+    
+    public AdjacencyMatrixGraph<City,Double> loadCitiesGraph(String filepath,HashSet<City> existingCities) throws FileNotFoundException, IOException{
+        AdjacencyMatrixGraph<City,Double> citiesGraph = new AdjacencyMatrixGraph<>();
+        // insert existint cities on graph
+        for (City city : existingCities) {
+            citiesGraph.insertVertex(city);
+        }
+        //read file
+        BufferedReader buffedReader =new BufferedReader(new FileReader(filepath));
+        String currentLine;
+        
+        while((currentLine=buffedReader.readLine())!=null){
+            String[] lineSplit=currentLine.split(",");
+            String city1=lineSplit[0];
+            String city2=lineSplit[1];
+            Double distance=Double.parseDouble(lineSplit[2]);
+            
+            City firstCity=null;
+            City secondCity=null;
+            Iterable<City> cities=citiesGraph.vertices();
+            for (City city : cities) {
+                if(city.getCityName().equals(city1)){
+                    firstCity=city;
+                }
+                if(city.getCityName().equals(city2)){
+                    secondCity=city;
+                }
+            }
+            if(firstCity!=null & secondCity!=null){
+                citiesGraph.insertEdge(firstCity, secondCity, distance);
+            }
+        }
+        return citiesGraph;
     }
 }
