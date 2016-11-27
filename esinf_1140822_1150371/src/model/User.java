@@ -59,7 +59,7 @@ public class User  {
     public User(String nickname, String email, String currentCity,  List<City> citiesVisited, int visitPoints) {
         this.nickname = nickname;
         this.email = email;
-     
+        
         this.citiesVisited = citiesVisited;
         this.visitPoints = visitPoints;
 
@@ -86,11 +86,9 @@ public class User  {
      * @return the current city if there's any null otherwise
      */
     public City getCurrentCity() {
-        if (citiesVisited.size() > 0) {
-            City city = (City) this.citiesVisited.toArray()[citiesVisited.size() - 1];
-            return city;
-        }
-        return null;
+         return citiesVisited.get(citiesVisited.size()-1);
+      
+        
     }
 
     /**

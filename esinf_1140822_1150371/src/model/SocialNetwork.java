@@ -84,10 +84,10 @@ public class SocialNetwork implements Checkinable {
      * @param visitPoints
      * @return
      */
-    public boolean addUser(String nickname, String email, String currentCity,List<City> cities, int visitPoints) {
+    public boolean addUser(String nickname, String email, String currentCity, List<City> cities, int visitPoints) {
 
         AddUserController controller = new AddUserController(this);
-        return controller.AddUser(nickname, email, currentCity,  cities, visitPoints);
+        return controller.AddUser(nickname, email, currentCity, cities, visitPoints);
 
     }
 
@@ -158,16 +158,15 @@ public class SocialNetwork implements Checkinable {
      * @param longitude the longitude
      * @return the user's friends
      */
-    public Map<String,User> getFriendsByCity(String nickname,double latitude, double longitude) {
+    public Map<String, User> getFriendsByCity(String nickname, double latitude, double longitude) {
         Map<String, User> friendsNearby = new HashMap();
         Set<User> usersFriends = listOfUsers.getFriendsMap().get(listOfUsers.getUserByNickname(nickname));
         if (usersFriends != null) {
             for (User u : usersFriends) {
-                  City c = (listOfCities.getCityByCoordinates(latitude,longitude));
-                if (u.getCurrentCity() != null&& c!=null) {
-                  
-                    if (u.getCurrentCity().equals(c)) 
-                    {
+                City c = (listOfCities.getCityByCoordinates(latitude, longitude));
+                if (u.getCurrentCity() != null && c != null) {
+
+                    if (u.getCurrentCity().equals(c)) {
                         friendsNearby.put(nickname, u);
                     }
                 }
@@ -176,139 +175,146 @@ public class SocialNetwork implements Checkinable {
         }
         return null;
     }
-    
-    //2.b
-    public Iterable<User> getClosestFriends(String username,Double distance){
-        User user=this.listOfUsers.getUserByNickname(username);
-        HashSet<User> closestFriends=new HashSet();
 
-       ArrayList<User> friends=new ArrayList<>();
-       Iterable<Edge<User,Integer>> outEdges= this.listOfUsers.friendsGraph.outgoingEdges(user);
-        for (Edge<User, Integer> outEdge : outEdges) {
-             if(!outEdge.getVOrig().equals(user)){
-                 friends.add(outEdge.getVOrig());
-             }else{
-                 friends.add(outEdge.getVDest());
-             }     
-            
-        }
-         
-        City currentCity=user.getCurrentCity();
-       LinkedList<City> connectedCities= graphMatrizAdj.GraphAlgorithms.DFS(this.listOfCities.cityGraph, currentCity);
+    //2.b
+    public Iterable<User> getClosestFriends(String username, Double distance) {
+        User user = this.listOfUsers.getUserByNickname(username);
+        HashSet<User> closestFriends = new HashSet();
+
+        Set<User> friends = this.listOfUsers.getFriendsMap().get(user);
+//        Iterable<Edge<User, Integer>> outEdges = this.listOfUsers.friendsGraph.outgoingEdges(user);
+//        for (Edge<User, Integer> outEdge : outEdges) {
+//            if (!outEdge.getVOrig().equals(user)) {
+//                friends.add(outEdge.getVOrig());
+//            } else {
+//                friends.add(outEdge.getVDest());
+//            }
+//
+//        }
+
+        City currentCity = user.getCurrentCity();
+        LinkedList<City> connectedCities = graphMatrizAdj.GraphAlgorithms.DFS(this.listOfCities.cityGraph, currentCity);
+
         for (City connectedCity : connectedCities) {
-        LinkedList<City> path=new LinkedList<>(); 
-        double distanceFromCity=graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph, currentCity, connectedCity,path);
-       
-         if(distanceFromCity<distance){
-             for (User friend:friends) {
-                 if(friend.getCurrentCity().equals(connectedCity)){
-                     closestFriends.add(user);
-                 }
-             }
-         }       
-                
-        }  
-        for (User friend:friends) {
-            if(friend.getCurrentCity().equals(currentCity)){
-                closestFriends.add(user);
-            }
-        }
-        return closestFriends;
-    }
-    //2.c
-    public LinkedList<City> shortestPathBetweenUsers(User u1,User u2){
-        LinkedList<City> path=new LinkedList<>();
-        City c_u1=u1.getCurrentCity();
-        City c_u2=u2.getCurrentCity();
-        
-        graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, c_u1, c_u2, path);
-        return path;
-    }
-    
-    //2.d
-    public LinkedList<City> shortestPathMostFriendsCity(String user,String friend){
-        User u1=this.listOfUsers.getUserByNickname(user);
-        User u2=this.listOfUsers.getUserByNickname(friend);
-        
-        City userMostFriendsCity=this.cityWithMostFriends(u1);
-        City friendMostFriendsCity=this.cityWithMostFriends(u2);
-        City userCurrentCity=u1.getCurrentCity();
-        City friendCurrentCity=u2.getCurrentCity();
-        
-        LinkedList<City> path=new LinkedList<>();
-        
-        //se a cidade com mais amigos for comum o percurso sera shortestPath(c1,common)+shortestPath(common,c2)
-        if(userMostFriendsCity.equals(friendMostFriendsCity)){
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userCurrentCity, userMostFriendsCity, path);
-            LinkedList<City> path2=new LinkedList<>();
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph,  userMostFriendsCity,friendCurrentCity ,path);
-            path2=(LinkedList)path2.subList(1, path2.size());
-            path.addAll(path2);
-            return path;
-        }
-        
-        // caso nao sejam iguais vai ser c1-mostFriends1-mostFriends2-c2 ou c1-mostFriends2-mostFriends1-c2, retorna o menor destes 2 caminhos
-        LinkedList<City> aux_path=new LinkedList<>(); //caminho c1-mostFriends1
-        double distance1=graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph,userCurrentCity ,userMostFriendsCity, aux_path);//distancia entre c1-mostFriends1
-        LinkedList<City> aux_path2=new LinkedList<>(); //caminho c1-mostFriends2
-        double distance2=graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph,userCurrentCity ,friendMostFriendsCity, aux_path2);//distancia entre c1-mostFriends2
-        
-        if(distance1<distance2){
-            path.addAll(aux_path); //contem c1-mostFriends1
-            aux_path=new LinkedList<>();
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity,friendMostFriendsCity, aux_path);
-            aux_path=(LinkedList<City>)aux_path.subList(1, aux_path.size());  //contem mostFriend1.next ate mostFriends2
-            path.addAll(aux_path); //contem c1-mostFriends1-mostFriends2
-            aux_path=new LinkedList<>();
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph,friendMostFriendsCity,friendCurrentCity, aux_path);
-            aux_path=(LinkedList<City>) aux_path.subList(1, aux_path.size()); //contem de mostFriend2.next ate c2
-            path.addAll(aux_path);
-            
-            return path;
-        }else{
-            path.addAll(aux_path2);//contem c1-mostFriends2
-            aux_path=new LinkedList<>();
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph,friendMostFriendsCity,userMostFriendsCity, aux_path);
-            aux_path=(LinkedList<City>) aux_path.subList(1, aux_path.size());//contem mostFriend2.next ate mostFriends1
-            path.addAll(aux_path); //contem c1-mostFriends2-mostFriends1
-            aux_path=new LinkedList<>();
-            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph,userMostFriendsCity,friendCurrentCity, aux_path);
-            aux_path=(LinkedList<City>) aux_path.subList(1, aux_path.size());
-            path.addAll(aux_path);//contem c1-mostFriends2-mostFriends1-c2
-            
-            return path;
-        }
-        
-    }
-    
-    private City cityWithMostFriends(User user){
-       HashMap<Integer,City> cities= new HashMap<>();
-        
-        for (User u:getFriends(user)) {
-            City currentCity=u.getCurrentCity();
-            if(!cities.containsKey(currentCity)){
-                cities.put(1, currentCity);
-            }else{
-                for (City c:cities.values()) {
-                    if(c.equals(currentCity)){
-                       for(int a:cities.keySet()){
-                           if(cities.get(a).equals(currentCity)){
-                               cities.replace(a++, c);
-                           }
-                       }
+            LinkedList<City> path = new LinkedList<>();
+            double distanceFromCity = graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph, currentCity, connectedCity, path);
+
+            if (distanceFromCity < distance) {
+                for (User friend : friends) {
+                    if (this.listOfUsers.getUserMap().containsValue(friend)) {
+
+                        if (friend.getCurrentCity().equals(connectedCity)) {
+                            closestFriends.add(user);
+                        }
                     }
                 }
             }
-           }
-        
-        TreeMap<Integer,City> sorted = new TreeMap<>(cities);
-        
-        return sorted.get(sorted.lastKey()); //como o treemap ordena por ordem crescente a ultima key sera a cidade com mais amigos
-        
+        }
+        for (User friend : friends) {
+            friend.getCurrentCity();
+            if (this.listOfUsers.getUserMap().containsValue(friend)) {
+            if (friend.getCurrentCity().equals(currentCity)) {
+                closestFriends.add(user);
+            }
+        }
+        }
+        return closestFriends;
     }
-    
-    private Iterable<User> getFriends(User user){
-       
+
+    //2.c
+    public LinkedList<City> shortestPathBetweenUsers(User u1, User u2) {
+        LinkedList<City> path = new LinkedList<>();
+        City c_u1 = u1.getCurrentCity();
+        City c_u2 = u2.getCurrentCity();
+
+        graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, c_u1, c_u2, path);
+        return path;
+    }
+
+    //2.d
+    public LinkedList<City> shortestPathMostFriendsCity(String user, String friend) {
+        User u1 = this.listOfUsers.getUserByNickname(user);
+        User u2 = this.listOfUsers.getUserByNickname(friend);
+
+        City userMostFriendsCity = this.cityWithMostFriends(u1);
+        City friendMostFriendsCity = this.cityWithMostFriends(u2);
+        City userCurrentCity = u1.getCurrentCity();
+        City friendCurrentCity = u2.getCurrentCity();
+
+        LinkedList<City> path = new LinkedList<>();
+
+        //se a cidade com mais amigos for comum o percurso sera shortestPath(c1,common)+shortestPath(common,c2)
+        if (userMostFriendsCity.equals(friendMostFriendsCity)) {
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userCurrentCity, userMostFriendsCity, path);
+            LinkedList<City> path2 = new LinkedList<>();
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity, friendCurrentCity, path);
+            path2 = (LinkedList) path2.subList(1, path2.size());
+            path.addAll(path2);
+            return path;
+        }
+
+        // caso nao sejam iguais vai ser c1-mostFriends1-mostFriends2-c2 ou c1-mostFriends2-mostFriends1-c2, retorna o menor destes 2 caminhos
+        LinkedList<City> aux_path = new LinkedList<>(); //caminho c1-mostFriends1
+        double distance1 = graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph, userCurrentCity, userMostFriendsCity, aux_path);//distancia entre c1-mostFriends1
+        LinkedList<City> aux_path2 = new LinkedList<>(); //caminho c1-mostFriends2
+        double distance2 = graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPathDistance(this.listOfCities.cityGraph, userCurrentCity, friendMostFriendsCity, aux_path2);//distancia entre c1-mostFriends2
+
+        if (distance1 < distance2) {
+            path.addAll(aux_path); //contem c1-mostFriends1
+            aux_path = new LinkedList<>();
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity, friendMostFriendsCity, aux_path);
+            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());  //contem mostFriend1.next ate mostFriends2
+            path.addAll(aux_path); //contem c1-mostFriends1-mostFriends2
+            aux_path = new LinkedList<>();
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, friendMostFriendsCity, friendCurrentCity, aux_path);
+            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size()); //contem de mostFriend2.next ate c2
+            path.addAll(aux_path);
+
+            return path;
+        } else {
+            path.addAll(aux_path2);//contem c1-mostFriends2
+            aux_path = new LinkedList<>();
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, friendMostFriendsCity, userMostFriendsCity, aux_path);
+            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());//contem mostFriend2.next ate mostFriends1
+            path.addAll(aux_path); //contem c1-mostFriends2-mostFriends1
+            aux_path = new LinkedList<>();
+            graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity, friendCurrentCity, aux_path);
+            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());
+            path.addAll(aux_path);//contem c1-mostFriends2-mostFriends1-c2
+
+            return path;
+        }
+
+    }
+
+    private City cityWithMostFriends(User user) {
+        HashMap<Integer, City> cities = new HashMap<>();
+
+        for (User u : getFriends(user)) {
+            City currentCity = u.getCurrentCity();
+            if (!cities.containsKey(currentCity)) {
+                cities.put(1, currentCity);
+            } else {
+                for (City c : cities.values()) {
+                    if (c.equals(currentCity)) {
+                        for (int a : cities.keySet()) {
+                            if (cities.get(a).equals(currentCity)) {
+                                cities.replace(a++, c);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        TreeMap<Integer, City> sorted = new TreeMap<>(cities);
+
+        return sorted.get(sorted.lastKey()); //como o treemap ordena por ordem crescente a ultima key sera a cidade com mais amigos
+
+    }
+
+    private Iterable<User> getFriends(User user) {
+
         return this.listOfUsers.getFriendsMap().get(user);
     }
 }

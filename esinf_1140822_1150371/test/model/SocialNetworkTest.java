@@ -5,6 +5,9 @@
  */
 package model;
 
+import graphMatrizAdj.AdjacencyMatrixGraph;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,28 +18,29 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.InputOutput;
 
 /**
  *
  * @author Jose Silva <1150371@isep.ipp.pt>
  */
 public class SocialNetworkTest {
-    
+
     public SocialNetworkTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -189,36 +193,47 @@ public class SocialNetworkTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
     /**
      * Test of getClosestFriends method, of class SocialNetwork.
      */
     @Test
-    public void testGetClosestFriends() {
+    public void testGetClosestFriends() throws FileNotFoundException, IOException {
         System.out.println("getClosestFriends");
-        String username = "nick0";
-        Double distance = 20d;
+        String username = "nick2";
+        Double distance = 200d;
         SocialNetwork instance = new SocialNetwork();
-        Iterable<User> expResult = null;
+        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
+        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections10.txt", InputOutput.readCityFromFile("D:\\city10.txt").values());
+        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users10.txt", instance));
+        instance.getListOfUsers().getUserByNickname(username).setCurrentCity(instance.getListOfCities().getCityByName("city0"));
+        instance.getListOfUsers().addFriendToGraph();
+
         Iterable<User> result = instance.getClosestFriends(username, distance);
-        assertEquals(expResult, result);
-       
+        for (User user : result) {
+            System.out.println("\nTEstGetClosestFriends\t" + user.toString());
+        }
+
     }
 
     /**
      * Test of shortestPathBetweenUsers method, of class SocialNetwork.
      */
     @Test
-    public void testShortestPathBetweenUsers() {
+    public void testShortestPathBetweenUsers() throws FileNotFoundException, IOException {
         System.out.println("shortestPathBetweenUsers");
-        User u1 = null;
-        User u2 = null;
         SocialNetwork instance = new SocialNetwork();
-        LinkedList<City> expResult = null;
+
+        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections10.txt", InputOutput.readCityFromFile("D:\\city10.txt").values());
+        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
+        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users10.txt", instance));
+        User u1 = instance.getListOfUsers().getUserByNickname("nick0");
+        User u2 = instance.getListOfUsers().getUserByNickname("nick1");
+
         LinkedList<City> result = instance.shortestPathBetweenUsers(u1, u2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (City city : result) {
+            System.out.println(city.toString());
+        }
+
     }
 
     /**
@@ -391,5 +406,5 @@ public class SocialNetworkTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

@@ -174,7 +174,7 @@ public class InputOutput {
     }
 
     //2.a)
-    public AdjacencyMatrixGraph<City, Double> loadCitiesGraph(String filepath, Iterable<City> existingCities) throws FileNotFoundException, IOException {
+    public static AdjacencyMatrixGraph<City, Double> loadCitiesGraph(String filepath, Iterable<City> existingCities) throws FileNotFoundException, IOException {
         AdjacencyMatrixGraph<City, Double> citiesGraph = new AdjacencyMatrixGraph<>();
         // insert existint cities on graph
         for (City city : existingCities) {

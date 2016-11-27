@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import model.City;
 import model.ListOfCities;
+import model.ListOfUsers;
 import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -104,7 +105,7 @@ public class InputOutputTest {
         String filePath = "D:\\users10.txt";
         SocialNetwork r = new SocialNetwork();
         r.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
-        Map<User, Set<User>> result = InputOutput.readUsersFromFile(filePath, r);
+        ListOfUsers result = InputOutput.readUsersFromFile(filePath, r);
         System.out.println("hello");
         
      
