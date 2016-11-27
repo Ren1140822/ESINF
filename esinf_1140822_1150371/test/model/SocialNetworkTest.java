@@ -240,16 +240,23 @@ public class SocialNetworkTest {
      * Test of shortestPathMostFriendsCity method, of class SocialNetwork.
      */
     @Test
-    public void testShortestPathMostFriendsCity() {
+    public void testShortestPathMostFriendsCity() throws FileNotFoundException, IOException {
         System.out.println("shortestPathMostFriendsCity");
-        String user = "";
-        String friend = "";
-        SocialNetwork instance = new SocialNetwork();
-        LinkedList<City> expResult = null;
+        String user = "nick2";
+        String friend = "nick1";
+       SocialNetwork instance = new SocialNetwork();
+        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
+        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections10.txt", InputOutput.readCityFromFile("D:\\city10.txt").values());
+        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users10.txt", instance));
+        instance.getListOfUsers().addFriendToGraph();
+        instance.getListOfUsers().addFriendToGraph();
         LinkedList<City> result = instance.shortestPathMostFriendsCity(user, friend);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        for (City city : result) {
+            System.out.println(city.getCityName()+",");
+        }
+        
+       
     }
 
     /**

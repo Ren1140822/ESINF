@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.RandomAccess;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -182,15 +183,7 @@ public class SocialNetwork implements Checkinable {
         HashSet<User> closestFriends = new HashSet();
 
         Set<User> friends = this.listOfUsers.getFriendsMap().get(user);
-//        Iterable<Edge<User, Integer>> outEdges = this.listOfUsers.friendsGraph.outgoingEdges(user);
-//        for (Edge<User, Integer> outEdge : outEdges) {
-//            if (!outEdge.getVOrig().equals(user)) {
-//                friends.add(outEdge.getVOrig());
-//            } else {
-//                friends.add(outEdge.getVDest());
-//            }
-//
-//        }
+
 
         City currentCity = user.getCurrentCity();
         LinkedList<City> connectedCities = graphMatrizAdj.GraphAlgorithms.DFS(this.listOfCities.cityGraph, currentCity);
@@ -210,7 +203,7 @@ public class SocialNetwork implements Checkinable {
                 }
             }
         }
-       
+
         return closestFriends;
     }
 
@@ -227,12 +220,13 @@ public class SocialNetwork implements Checkinable {
     //2.d
     public LinkedList<City> shortestPathMostFriendsCity(String user, String friend) {
         User u1 = this.listOfUsers.getUserByNickname(user);
+        u1.setCurrentCity(u1.getCurrentCity());
         User u2 = this.listOfUsers.getUserByNickname(friend);
-
-        City userMostFriendsCity = this.cityWithMostFriends(u1);
-        City friendMostFriendsCity = this.cityWithMostFriends(u2);
+        u2.setCurrentCity(u2.getCurrentCity());
         City userCurrentCity = u1.getCurrentCity();
         City friendCurrentCity = u2.getCurrentCity();
+        City userMostFriendsCity = this.cityWithMostFriends(u1);
+        City friendMostFriendsCity = this.cityWithMostFriends(u2);
 
         LinkedList<City> path = new LinkedList<>();
 
@@ -256,11 +250,11 @@ public class SocialNetwork implements Checkinable {
             path.addAll(aux_path); //contem c1-mostFriends1
             aux_path = new LinkedList<>();
             graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity, friendMostFriendsCity, aux_path);
-            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());  //contem mostFriend1.next ate mostFriends2
+            aux_path = new LinkedList<City> (aux_path.subList(1, aux_path.size()));  //contem mostFriend1.next ate mostFriends2
             path.addAll(aux_path); //contem c1-mostFriends1-mostFriends2
             aux_path = new LinkedList<>();
             graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, friendMostFriendsCity, friendCurrentCity, aux_path);
-            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size()); //contem de mostFriend2.next ate c2
+            aux_path = new LinkedList<City>(aux_path.subList(1, aux_path.size())); //contem de mostFriend2.next ate c2
             path.addAll(aux_path);
 
             return path;
@@ -268,11 +262,11 @@ public class SocialNetwork implements Checkinable {
             path.addAll(aux_path2);//contem c1-mostFriends2
             aux_path = new LinkedList<>();
             graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, friendMostFriendsCity, userMostFriendsCity, aux_path);
-            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());//contem mostFriend2.next ate mostFriends1
+            aux_path = new LinkedList<City>( aux_path.subList(1, aux_path.size()));//contem mostFriend2.next ate mostFriends1
             path.addAll(aux_path); //contem c1-mostFriends2-mostFriends1
             aux_path = new LinkedList<>();
             graphMatrizAdj.EdgeAsDoubleGraphAlgorithms.shortestPath(this.listOfCities.cityGraph, userMostFriendsCity, friendCurrentCity, aux_path);
-            aux_path = (LinkedList<City>) aux_path.subList(1, aux_path.size());
+            aux_path = new LinkedList<City>( aux_path.subList(1, aux_path.size()));
             path.addAll(aux_path);//contem c1-mostFriends2-mostFriends1-c2
 
             return path;
@@ -283,7 +277,8 @@ public class SocialNetwork implements Checkinable {
     private City cityWithMostFriends(User user) {
         HashMap<Integer, City> cities = new HashMap<>();
 
-        for (User u : getFriends(user)) {
+        for (User u : this.listOfUsers.getFriendsMap().get(user)) {
+            if(u!=null){
             City currentCity = u.getCurrentCity();
             if (!cities.containsKey(currentCity)) {
                 cities.put(1, currentCity);
@@ -299,6 +294,7 @@ public class SocialNetwork implements Checkinable {
                 }
             }
         }
+        }
 
         TreeMap<Integer, City> sorted = new TreeMap<>(cities);
 
@@ -306,8 +302,5 @@ public class SocialNetwork implements Checkinable {
 
     }
 
-    private Iterable<User> getFriends(User user) {
 
-        return this.listOfUsers.getFriendsMap().get(user);
-    }
 }
