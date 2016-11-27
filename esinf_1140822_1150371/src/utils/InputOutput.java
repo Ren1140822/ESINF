@@ -73,9 +73,11 @@ public class InputOutput {
         String nickName = "";
         String email = "";
         List<City> cities = new LinkedList();
-         Map<User,Set<User>> friendsMap = new HashMap<>();
-         Set<User> friends = new HashSet();
+         Map<User,Set<String>> friendsMap = new HashMap<>();
+         Set<String> friends = new HashSet();
         while (scan.hasNext()) {
+            friendsMap = new HashMap<>();
+            friends = new HashSet();
             String firstLine = scan.next();
             String secondLine = scan.next();
             String[] splitFirstLine = firstLine.split(",");
@@ -94,10 +96,15 @@ public class InputOutput {
             userMap.put(newUser.getNickname(), newUser);
            
         }
+        Map<User,Set<User>>  finalmap=new HashMap<>();
+        Set<User> finalsFriends= new HashSet();
          for (User u : friendsMap.keySet()) {
-             for(User u2 : friendsMap.get(u))
-              r.getListOfUsers().addFriend(u.getNickname(), u2.getNickname());
-            }
+             
+             for (String s:friendsMap.get(u)) {
+                 finalsFriends.add(r.getListOfUsers().getUserByNickname(s));
+             }
+            finalmap.put(u, finalsFriends);
+         }
         return userMap;
 
     }
@@ -126,12 +133,12 @@ public class InputOutput {
      * @param r the main registry
      * @return the list of friends
      */
-    private static Set<User> getFriendsFromString(String line, SocialNetwork r) {
-        Set<User> friends = new HashSet<User>();
+    private static Set<String> getFriendsFromString(String line, SocialNetwork r) {
+        Set<String> friends = new HashSet<>();
         String[] splitString = line.split(",");
         for (String string : splitString) {
-            User friend = r.getListOfUsers().getUserByNickname(string);
-            friends.add(friend);
+            
+            friends.add(string);
         }
         return friends;
     }
