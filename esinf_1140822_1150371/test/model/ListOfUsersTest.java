@@ -34,9 +34,9 @@ public class ListOfUsersTest {
         instance = r.getListOfUsers();
         ListOfUsers instance = this.instance;
         ListOfCities list = new ListOfCities();
-        list.setListOfCities(InputOutput.readCityFromFile("D:\\cities10.txt"));
+        list.setListOfCities(InputOutput.readCityFromFile("D:\\cities300.txt"));
         r.setListOfCities(list);
-        instance.setUserMap(InputOutput.readUsersFromFile("D:\\users10.txt", r));
+        instance.setUserMap(InputOutput.readUsersFromFile("D:\\users300.txt", r));
 
         instance.addFriend("nick0", "nick1");
         instance.addFriend("nick1", "nick3");
@@ -191,6 +191,37 @@ public class ListOfUsersTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
+    /**
+     * // * Test of removeFriend method, of class ListOfUsers. //
+     */
+//    @Test
+//    public void testRemoveFriend() {
+//        System.out.println("removeFriend");
+//        String nickname1 = "";
+//        String nickname2 = "";
+//        ListOfUsers instance = new ListOfUsers();
+//        boolean expResult = false;
+//        boolean result = instance.removeFriend(nickname1, nickname2);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of friendExists method, of class ListOfUsers.
+//     */
+//    @Test
+//    public void testFriendExists() {
+//        System.out.println("friendExists");
+//        String nickname1 = "";
+//        String nickname2 = "";
+//        ListOfUsers instance = new ListOfUsers();
+//        boolean expResult = false;
+//        boolean result = instance.friendExists(nickname1, nickname2);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 //
 //    /**
 //     * Test of addFriendToGraph method, of class ListOfUsers.
@@ -240,15 +271,16 @@ public class ListOfUsersTest {
     public void testFindUsersWithinRelationshipDistance() {
         System.out.println("findUsersWithinRelationshipDistance");
         String nickname1 = "nick0";
-        int distance = 3;
+        int distance = 2;
         ListOfUsers instance = this.instance;
         LinkedList<User> list = new LinkedList<>();
 
         list.add(instance.getUserByNickname("nick1"));
-        list.add(instance.getUserByNickname("nick3"));
         list.add(instance.getUserByNickname("nick6"));
         list.add(instance.getUserByNickname("nick7"));
         list.add(instance.getUserByNickname("nick4"));
+        list.add(instance.getUserByNickname("nick3"));
+
         Iterable<User> expResult = list;
         Iterable<User> result = instance.findUsersWithinRelationshipDistance(nickname1, distance);
         assertEquals(expResult, result);
@@ -264,9 +296,10 @@ public class ListOfUsersTest {
         System.out.println("findUsersWithGreatestRelationshipDistance");
         ListOfUsers instance = this.instance;
         LinkedList<User> list = new LinkedList<>();
-        //distancia entre os dois tem de ser 6.
+
+        list.add(instance.getUserByNickname("nick0"));
         list.add(instance.getUserByNickname("nick5"));
-        list.add(instance.getUserByNickname("nick3"));
+
         Iterable<User> expResult = list;
         Iterable<User> result = instance.findUsersWithGreatestRelationshipDistance();
         assertEquals(expResult, result);
@@ -286,7 +319,7 @@ public class ListOfUsersTest {
         instance.addFriend("nick7", "nick5");
         instance.addFriend("nick4", "nick3");
         instance.addFriend("nick7", "nick3");
-           instance.addFriendToGraph();
+        instance.addFriendToGraph();
         list.add(instance.getUserByNickname("nick5"));
         list.add(instance.getUserByNickname("nick3"));
         Iterable<User> expResult = list;
@@ -294,48 +327,18 @@ public class ListOfUsersTest {
         assertEquals(expResult, result);
 
     }
-  /**
+
+    /**
      * Test of removeFriend method, of class ListOfUsers.
      */
     @Test
     public void testgetMostInfluentialUser() {
         System.out.println("getMostInfluentialUser");
-       
+
         ListOfUsers instance = this.instance;
-        User expResult = instance.getUserByNickname("nick1");
+        User expResult = instance.getUserByNickname("nick6");
         User result = instance.findMostInfluentialUser();
-        assertEquals(expResult,result);
-    }
-    /**
-     * Test of removeFriend method, of class ListOfUsers.
-     */
-    @Test
-    public void testRemoveFriend() {
-        System.out.println("removeFriend");
-        String nickname1 = "";
-        String nickname2 = "";
-        ListOfUsers instance = new ListOfUsers();
-        boolean expResult = false;
-        boolean result = instance.removeFriend(nickname1, nickname2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of friendExists method, of class ListOfUsers.
-     */
-    @Test
-    public void testFriendExists() {
-        System.out.println("friendExists");
-        String nickname1 = "";
-        String nickname2 = "";
-        ListOfUsers instance = new ListOfUsers();
-        boolean expResult = false;
-        boolean result = instance.friendExists(nickname1, nickname2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+//  
 }
