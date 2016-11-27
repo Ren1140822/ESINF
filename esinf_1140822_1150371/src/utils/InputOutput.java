@@ -28,18 +28,19 @@ import model.User;
 public class InputOutput {
 
     /**
-     *Reads cities from a txt file.
+     * Reads cities from a txt file.
+     *
      * @param filePath the file path
      * @return the set of cities
      * @throws FileNotFoundException
      */
-    public static Map<String,City> readCityFromFile(String filePath) throws FileNotFoundException {
+    public static Map<String, City> readCityFromFile(String filePath) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-        Map<String,City> cities = new HashMap<String,City>();
+        Map<String, City> cities = new HashMap<String, City>();
         String cityName;
         int cityPoints;
-       double latitude;
-      double longitude;
+        double latitude;
+        double longitude;
 
         while (scan.hasNext()) {
             String entireString = scan.next();
@@ -49,8 +50,8 @@ public class InputOutput {
             cityPoints = Integer.parseInt(splitString[1]);
             latitude = Double.parseDouble(splitString[2]);
 
-            City tmpCity = new City(cityName,cityPoints,latitude, longitude);
-            cities.put(tmpCity.getCityName(),tmpCity);
+            City tmpCity = new City(cityName, cityPoints, latitude, longitude);
+            cities.put(tmpCity.getCityName(), tmpCity);
 
         }
 
@@ -59,19 +60,21 @@ public class InputOutput {
     }
 
     /**
-     *Reads users from a given txt file
+     * Reads users from a given txt file
+     *
      * @param filePath the file path
      * @param r the main registry to read cities
      * @return the list of users
      * @throws FileNotFoundException
      */
-    public static    Map<String, User>  readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
+    public static Map<String, User> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
-       Map<String, User> userMap = new LinkedHashMap<>();
+        Map<String, User> userMap = new LinkedHashMap<>();
         String nickName = "";
         String email = "";
         List<City> cities = new LinkedList();
-        Set<User> friends = new HashSet<User>();
+         Map<User,Set<User>> friendsMap = new HashMap<>();
+         Set<User> friends = new HashSet();
         while (scan.hasNext()) {
             String firstLine = scan.next();
             String secondLine = scan.next();
@@ -82,24 +85,29 @@ public class InputOutput {
             friends = getFriendsFromString(secondLine, r);
             Object[] aux = cities.toArray();
             City currentCity = (City) aux[0];
-            
-            User newUser = new User(nickName, email, currentCity.getCityName(), cities,0);
-            for(City c: newUser.getCitiesVisited()){
-                newUser.setVisitPoints(newUser.getVisitPoints()+c.getNumberOfPointsAwarded());
+
+            User newUser = new User(nickName, email, currentCity.getCityName(), cities, 0);
+            friendsMap.put(newUser, friends);
+            for (City c : newUser.getCitiesVisited()) {
+                newUser.setVisitPoints(newUser.getVisitPoints() + c.getNumberOfPointsAwarded());
             }
             userMap.put(newUser.getNickname(), newUser);
-
+           
         }
-
+         for (User u : friendsMap.keySet()) {
+             for(User u2 : friendsMap.get(u))
+              r.getListOfUsers().addFriend(u.getNickname(), u2.getNickname());
+            }
         return userMap;
 
     }
 
     /**
      * Gets cities from string ( cities need to be uploaded first).
+     *
      * @param line the line
      * @param r the main registry
-     * @return  the list of cities
+     * @return the list of cities
      */
     private static List<City> getCitiesFromString(String line, SocialNetwork r) {
         List<City> cities = new LinkedList<City>();
@@ -113,9 +121,10 @@ public class InputOutput {
 
     /**
      * Gets friends from string.
+     *
      * @param line the line
      * @param r the main registry
-     * @return  the list of friends
+     * @return the list of friends
      */
     private static Set<User> getFriendsFromString(String line, SocialNetwork r) {
         Set<User> friends = new HashSet<User>();
@@ -129,49 +138,49 @@ public class InputOutput {
 
     /**
      * Reads the cities to a graph
+     *
      * @param path the file path
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
-    public static void readCitiesToGraph(String path) throws FileNotFoundException{
+    public static void readCitiesToGraph(String path) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(path));
         String line = scan.next();
         String[] lineSplit = line.split(",");
-        String city1= lineSplit[0];
+        String city1 = lineSplit[0];
         String city2 = lineSplit[1];
         long distance = Long.parseLong(lineSplit[2]);
-       
-        
-        
+
     }
+
     //2.a)
-    public AdjacencyMatrixGraph<City,Double> loadCitiesGraph(String filepath,Iterable<City> existingCities) throws FileNotFoundException, IOException{
-        AdjacencyMatrixGraph<City,Double> citiesGraph = new AdjacencyMatrixGraph<>();
+    public AdjacencyMatrixGraph<City, Double> loadCitiesGraph(String filepath, Iterable<City> existingCities) throws FileNotFoundException, IOException {
+        AdjacencyMatrixGraph<City, Double> citiesGraph = new AdjacencyMatrixGraph<>();
         // insert existint cities on graph
         for (City city : existingCities) {
             citiesGraph.insertVertex(city);
         }
         //read file
-        BufferedReader buffedReader =new BufferedReader(new FileReader(filepath));
+        BufferedReader buffedReader = new BufferedReader(new FileReader(filepath));
         String currentLine;
-        
-        while((currentLine=buffedReader.readLine())!=null){
-            String[] lineSplit=currentLine.split(",");
-            String city1=lineSplit[0];
-            String city2=lineSplit[1];
-            Double distance=Double.parseDouble(lineSplit[2]);
-            
-            City firstCity=null;
-            City secondCity=null;
-            Iterable<City> cities=citiesGraph.vertices();
+
+        while ((currentLine = buffedReader.readLine()) != null) {
+            String[] lineSplit = currentLine.split(",");
+            String city1 = lineSplit[0];
+            String city2 = lineSplit[1];
+            Double distance = Double.parseDouble(lineSplit[2]);
+
+            City firstCity = null;
+            City secondCity = null;
+            Iterable<City> cities = citiesGraph.vertices();
             for (City city : cities) {
-                if(city.getCityName().equals(city1)){
-                    firstCity=city;
+                if (city.getCityName().equals(city1)) {
+                    firstCity = city;
                 }
-                if(city.getCityName().equals(city2)){
-                    secondCity=city;
+                if (city.getCityName().equals(city2)) {
+                    secondCity = city;
                 }
             }
-            if(firstCity!=null & secondCity!=null){
+            if (firstCity != null & secondCity != null) {
                 citiesGraph.insertEdge(firstCity, secondCity, distance);
             }
         }
