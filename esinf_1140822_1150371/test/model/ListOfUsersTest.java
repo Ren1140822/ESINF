@@ -5,7 +5,7 @@
  */
 package model;
 
-import graphbase.Graph;
+import graphMapAdj.Graph;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.LinkedList;

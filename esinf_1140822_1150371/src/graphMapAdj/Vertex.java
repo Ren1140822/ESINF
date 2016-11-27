@@ -1,5 +1,5 @@
 
-package graphbase;
+package graphMapAdj;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

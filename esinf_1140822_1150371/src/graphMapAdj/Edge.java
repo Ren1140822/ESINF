@@ -1,4 +1,4 @@
-package graphbase;
+package graphMapAdj;
 
 import java.lang.reflect.Array;
 

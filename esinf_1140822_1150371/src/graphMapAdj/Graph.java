@@ -1,4 +1,4 @@
-package graphbase;
+package graphMapAdj;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

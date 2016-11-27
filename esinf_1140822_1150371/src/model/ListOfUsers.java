@@ -5,7 +5,7 @@
  */
 package model;
 
-import graphbase.Graph;
+import graphMapAdj.Graph;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -166,7 +166,7 @@ public class ListOfUsers {
      */
     public int getRelationshipDistance(String nickname1, String nickname2) {
         LinkedList<User> users = new LinkedList<>();
-        graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
+        graphMapAdj.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
 
         return users.size()-2;
     }
@@ -182,7 +182,7 @@ public class ListOfUsers {
         LinkedList<User> users = new LinkedList<>();
  
         User usr = getUserByNickname(nickname1);
-        users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr, distance);
+        users = graphMapAdj.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr, distance);
         return users;
     }
 /**
@@ -196,7 +196,7 @@ public class ListOfUsers {
             for (User u2 : friendsGraph.vertices()) {
                 LinkedList<User> users = new LinkedList<>();
                 if (!u.equals(u2)) {
-                    graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(u.getNickname()), getUserByNickname(u2.getNickname()), users);
+                    graphMapAdj.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(u.getNickname()), getUserByNickname(u2.getNickname()), users);
                     if (users.size() > maxDistance) {
                         usersFarthestAway.clear();
                         usersFarthestAway.add(u);
@@ -219,7 +219,7 @@ public class ListOfUsers {
           LinkedList<User>friendsInCommon = new LinkedList<>();
           User u = getUserByNickname(nick1);
           User u2 = getUserByNickname(nick2);
-         friendsInCommon= graphbase.GraphAlgorithms.getCommonDirectVertices(friendsGraph, u, u2);
+         friendsInCommon= graphMapAdj.GraphAlgorithms.getCommonDirectVertices(friendsGraph, u, u2);
          return friendsInCommon;
       }
     /**
@@ -228,7 +228,7 @@ public class ListOfUsers {
      */
     public Iterable<User> findMostInfluentialUser()
     {
-          LinkedList<User>mostInfluentialUsers =    graphbase.GraphAlgorithms.graphCentrality(friendsGraph);
+          LinkedList<User>mostInfluentialUsers =    graphMapAdj.GraphAlgorithms.graphCentrality(friendsGraph);
           return mostInfluentialUsers;
     }
 

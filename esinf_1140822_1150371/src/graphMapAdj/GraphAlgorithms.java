@@ -1,7 +1,7 @@
 /*
 * A collection of graph algorithms.
  */
-package graphbase;
+package graphMapAdj;
 
 import java.util.ArrayList;
 import java.util.HashMap;
