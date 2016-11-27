@@ -179,7 +179,8 @@ public class GraphAlgorithms {
         return paths;
     }
 
-    public static <V, E> V graphCentrality(Graph<V, E> g) {
+    public static <V, E>  LinkedList<V> graphCentrality(Graph<V, E> g) {
+           LinkedList<V> returnVertexes  = new LinkedList<>();
         LinkedList<V> path = new LinkedList<>();
         int numVert = g.numVertices();
         V[] vertices = (V[]) g.allkeyVerts().clone();
@@ -213,7 +214,13 @@ public class GraphAlgorithms {
                 returnVertex = v;
             }
         }
-        return returnVertex;
+          for (V v : biggestShortestPath.keySet()) {
+              if(biggestShortestPath.get(v).doubleValue() == aux)
+              {
+                  returnVertexes.add(v);
+              }
+          }
+        return returnVertexes;
     }
 
     /**

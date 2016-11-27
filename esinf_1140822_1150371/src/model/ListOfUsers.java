@@ -197,9 +197,10 @@ public class ListOfUsers {
          return friendsInCommon;
       }
     
-    public User findMostInfluentialUser()
+    public Iterable<User> findMostInfluentialUser()
     {
-        return graphbase.GraphAlgorithms.graphCentrality(friendsGraph);
+          LinkedList<User>mostInfluentialUsers =    graphbase.GraphAlgorithms.graphCentrality(friendsGraph);
+          return mostInfluentialUsers;
     }
 
     /**

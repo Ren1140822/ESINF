@@ -37,7 +37,7 @@ public class ListOfUsersTest {
         list.setListOfCities(InputOutput.readCityFromFile("D:\\cities300.txt"));
         r.setListOfCities(list);
         instance.setUserMap(InputOutput.readUsersFromFile("D:\\users300.txt", r));
-
+        instance.getFriendsMap().clear();
         instance.addFriend("nick0", "nick1");
         instance.addFriend("nick1", "nick3");
         instance.addFriend("nick1", "nick6");
@@ -336,9 +336,13 @@ public class ListOfUsersTest {
         System.out.println("getMostInfluentialUser");
 
         ListOfUsers instance = this.instance;
-        User expResult = instance.getUserByNickname("nick6");
-        User result = instance.findMostInfluentialUser();
+        LinkedList<User> list = new LinkedList<>();
+
+        list.add(instance.getUserByNickname("nick6"));
+        list.add(instance.getUserByNickname("nick3"));
+        Iterable<User> expResult = list;
+        Iterable< User> result = instance.findMostInfluentialUser();
         assertEquals(expResult, result);
     }
-//  
+
 }
