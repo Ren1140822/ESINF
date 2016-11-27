@@ -192,7 +192,7 @@ public class GraphAlgorithms {
             shortestPathLength(g, v, vertices, visited, pathKeys, dist);
             for (int i = 0; i < dist.length; i++) {
                 for (int j = 0; j < dist.length; j++) {
-                    if (pathKeys[i] >dist[j]) {
+                    if (dist[i] >dist[j]) {
                         if (biggestShortestPath.containsKey(v)) {
                             if (biggestShortestPath.get(v).intValue() <dist[i]) {
                                 biggestShortestPath.remove(v);

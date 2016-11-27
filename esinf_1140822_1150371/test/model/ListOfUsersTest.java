@@ -26,8 +26,8 @@ import utils.InputOutput;
  */
 public class ListOfUsersTest {
 
-    SocialNetwork r;
-    ListOfUsers instance;
+    SocialNetwork r, r2;
+    ListOfUsers instance, instance2;
 
     public ListOfUsersTest() throws FileNotFoundException {
         r = new SocialNetwork();
@@ -47,6 +47,13 @@ public class ListOfUsersTest {
         instance.addFriend("nick7", "nick4");
 
         instance.addFriendToGraph();
+        r2 = new SocialNetwork();
+        ListOfCities list2 = new ListOfCities();
+        list2.setListOfCities(InputOutput.readCityFromFile("D:\\cities300.txt"));
+        r2.setListOfCities(list);
+        r2.setListOfUsers(InputOutput.readUsersFromFile("D:\\users300.txt", r2));
+        instance2 = r2.getListOfUsers();
+        instance2.addFriendToGraph();
     }
 
     @BeforeClass
@@ -452,6 +459,7 @@ public class ListOfUsersTest {
         assertEquals(expResult, result);
 
     }
+  
 
     /**
      * Test of findUsersWithinRelationshipDistance method, of class ListOfUsers.
@@ -465,15 +473,28 @@ public class ListOfUsersTest {
         LinkedList<User> list = new LinkedList<>();
 
         list.add(instance.getUserByNickname("nick1"));
-             list.add(instance.getUserByNickname("nick3"));
+        list.add(instance.getUserByNickname("nick3"));
         list.add(instance.getUserByNickname("nick6"));
         list.add(instance.getUserByNickname("nick7"));
-     
-   
 
         Iterable<User> expResult = list;
         Iterable<User> result = instance.findUsersWithinRelationshipDistance(nickname1, distance);
         assertEquals(expResult, result);
+
+    }
+       /**
+     * Test of findUsersWithinRelationshipDistance method, of class ListOfUsers.
+     */
+    @Test
+    public void testFindUsersWithinRelationshipDistance300() {
+        System.out.println("findUsersWithinRelationshipDistance");
+        String nickname1 = "nick0";
+        int distance = 2;
+        ListOfUsers instance = this.instance2;
+        //TAMANHOS MUITO GRANDES PARA ASSERT EQUALS,   estamos apenas a ver tamanho dos resultados esperados e obtidos para verificar tambem se algoritmo executa em tempo util
+        int expResult = 15;
+        Iterable<User> result = instance2.findUsersWithinRelationshipDistance(nickname1, distance);
+        assertEquals(expResult, result.spliterator().estimateSize());
 
     }
 
@@ -492,6 +513,26 @@ public class ListOfUsersTest {
 
         Iterable<User> expResult = list;
         Iterable<User> result = instance.findUsersWithGreatestRelationshipDistance();
+        assertEquals(expResult, result);
+    }
+    
+    
+    //AVISO: TESTE DEMORA 15-20 MINUTOS A CORRER
+      /**
+     * Test of findUsersWithGreatestRelationshipDistance method, of class
+     * ListOfUsers.
+     */
+    @Test
+    public void testFindUsersWithGreatestRelationshipDistance300() {
+        System.out.println("findUsersWithGreatestRelationshipDistance");
+        ListOfUsers instance = this.instance2;
+        LinkedList<User> list = new LinkedList<>();
+
+        list.add(instance.getUserByNickname("nick74"));
+        list.add(instance.getUserByNickname("nick100"));
+
+        Iterable<User> expResult = list;
+        Iterable<User> result = instance2.findUsersWithGreatestRelationshipDistance();
         assertEquals(expResult, result);
     }
 
@@ -518,6 +559,25 @@ public class ListOfUsersTest {
 
     }
 
+     /**
+     * Test of removeFriend method, of class ListOfUsers.
+     */
+    @Test
+    public void testgetCommonDirectVertices300() {
+        System.out.println("getCommonDirectVertices300");
+        String nickname1 = "nick4";
+        String nickname2 = "nick7";
+        ListOfUsers instance = this.instance2;
+        LinkedList<User> list = new LinkedList<>();
+
+     
+        list.add(instance.getUserByNickname("nick150"));
+     
+        Iterable<User> expResult = list;
+        Iterable<User> result = instance2.findUsersWithFriendsInCommon(nickname1, nickname2);
+        assertEquals(expResult, result);
+
+    }
     /**
      * Test of removeFriend method, of class ListOfUsers.
      */
@@ -533,6 +593,16 @@ public class ListOfUsersTest {
         Iterable<User> expResult = list;
         Iterable< User> result = instance.findMostInfluentialUser();
         assertEquals(expResult, result);
+    }
+      @Test
+    public void testgetMostInfluentialUser300() {
+        System.out.println("getMostInfluentialUser300");
+
+        ListOfUsers instance = this.instance2;
+    
+        int expResult =48;
+        Iterable< User> result = instance2.findMostInfluentialUser();
+        assertEquals(expResult, result.spliterator().estimateSize());
     }
 
 }
