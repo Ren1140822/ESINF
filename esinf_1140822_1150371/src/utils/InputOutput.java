@@ -67,16 +67,17 @@ public class InputOutput {
      * @return the list of users
      * @throws FileNotFoundException
      */
-    public static Map<String, User> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
+    public static Map<User, Set<User>> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
         Map<String, User> userMap = new LinkedHashMap<>();
         String nickName = "";
         String email = "";
         List<City> cities = new LinkedList();
-         Map<User,Set<String>> friendsMap = new HashMap<>();
-         Set<String> friends = new HashSet();
+        Map<User, Set<String>> friendsMap = new HashMap<>();
+        Set<String> friends = new HashSet();
+        Map<User, Set<User>> finalmap = new HashMap<>();
         while (scan.hasNext()) {
-            friendsMap = new HashMap<>();
+           
             friends = new HashSet();
             String firstLine = scan.next();
             String secondLine = scan.next();
@@ -89,23 +90,25 @@ public class InputOutput {
             City currentCity = (City) aux[0];
 
             User newUser = new User(nickName, email, currentCity.getCityName(), cities, 0);
-            friendsMap.put(newUser, friends);
+            
             for (City c : newUser.getCitiesVisited()) {
                 newUser.setVisitPoints(newUser.getVisitPoints() + c.getNumberOfPointsAwarded());
             }
+            friendsMap.put(newUser, friends);
             userMap.put(newUser.getNickname(), newUser);
-           
+            
         }
-        Map<User,Set<User>>  finalmap=new HashMap<>();
-        Set<User> finalsFriends= new HashSet();
-         for (User u : friendsMap.keySet()) {
-             
-             for (String s:friendsMap.get(u)) {
-                 finalsFriends.add(r.getListOfUsers().getUserByNickname(s));
-             }
-            finalmap.put(u, finalsFriends);
-         }
-        return userMap;
+        
+        for (User u : friendsMap.keySet()) {
+          
+            Set<User> aux=new HashSet<>();
+//            for (String s : friendsMap.get(u)) {
+//                aux.add(userMap.get(s));
+//            }
+            finalmap.put(u, aux);
+        
+    }
+        return finalmap;
 
     }
 
@@ -137,7 +140,7 @@ public class InputOutput {
         Set<String> friends = new HashSet<>();
         String[] splitString = line.split(",");
         for (String string : splitString) {
-            
+
             friends.add(string);
         }
         return friends;

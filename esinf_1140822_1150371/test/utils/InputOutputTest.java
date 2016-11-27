@@ -68,103 +68,7 @@ public class InputOutputTest {
 
     }
 
-    /**
-     * Test of readUsersFromFile method, of class InputOutput.
-     */
-//    @Test
-//    public void testReadUsersFromFile() throws Exception {
-//        System.out.println("readUsersFromFile");
-//        String cityPath = "D:\\cities10.txt";
-//        String filePath = "D:\\users10.txt";
-//        SocialNetwork r = new SocialNetwork();
-//        Set<City> cities = InputOutput.readCityFromFile(cityPath);
-//        ListOfCities listOfCities = new ListOfCities();
-//        listOfCities.setListOfCities(cities);
-//        r.setListOfCities(listOfCities);
-//        Set<User> expResult = new LinkedHashSet();
-//        expResult.add(nick0(r));
-//        expResult.add(nick1(r));
-//        expResult.add(nick2(r));
-//        expResult.add(nick3(r));
-//        expResult.add(nick4(r));
-//        Set<User> result=new LinkedHashSet();
-//        result = InputOutput.readUsersFromFile(filePath, r);
-//        boolean bool;
-//        for (User user : result) {
-//            if (user.equals(nick2(r))){
-//                
-//            }
-//        }
-//        assertEquals(expResult, result);
-//
-//    }
-//
-//    private User nick0(SocialNetwork r) {
-//        List<City> cities = new LinkedList();
-//        cities.add(r.getListOfCities().getCityByName("city4"));
-//        cities.add(r.getListOfCities().getCityByName("city6"));
-//        Set<User> friends = new HashSet();
-//        friends.add(r.getListOfUsers().getUserByNickname("nick7"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick4"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick3"));
-//        User u = new User("nick0", "mail_0_@sapo.pt", null, friends, cities, 144);
-//        return u;
-//    }
-//
-//    private User nick1(SocialNetwork r) {
-//        List<City> cities = new LinkedList();
-//        cities.add(r.getListOfCities().getCityByName("city5"));
-//        cities.add(r.getListOfCities().getCityByName("city9"));
-//        cities.add(r.getListOfCities().getCityByName("city4"));
-//        Set<User> friends = new HashSet();
-//        friends.add(r.getListOfUsers().getUserByNickname("nick6"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick2"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick8"));
-//        User u = new User("nick1", "mail_1_@sapo.pt", null, friends, cities, 0);
-//        u.setVisitPoints(203);
-//        return u;
-//    }
-//
-//    private User nick2(SocialNetwork r) {
-//        List<City> cities = new LinkedList();
-//
-//        cities.add(r.getListOfCities().getCityByName("city0"));
-//          cities.add(r.getListOfCities().getCityByName("city2"));
-//        Set<User> friends = new HashSet();
-//        friends.add(r.getListOfUsers().getUserByNickname("nick6"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick7"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick8"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick1"));
-//        User u = new User("nick2", "mail_2_@sapo.pt", null, friends, cities, 0);
-//        u.setVisitPoints(109);
-//        return u;
-//    }
-//
-//    private User nick3(SocialNetwork r) {
-//        List<City> cities = new LinkedList();
-//        cities.add(r.getListOfCities().getCityByName("city8"));
-//        Set<User> friends = new HashSet();
-//        friends.add(r.getListOfUsers().getUserByNickname("nick0"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick8"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick7"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick6"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick5"));
-//        User u = new User("nick3", "mail_3_@sapo.pt", null, friends, cities, 0);
-//        u.setVisitPoints(7);
-//        return u;
-//    }
-//
-//    private User nick4(SocialNetwork r) {
-//        List<City> cities = new LinkedList();
-//        cities.add(r.getListOfCities().getCityByName("city6"));
-//        cities.add(r.getListOfCities().getCityByName("city8"));
-//        Set<User> friends = new HashSet();
-//        friends.add(r.getListOfUsers().getUserByNickname("nick9"));
-//        friends.add(r.getListOfUsers().getUserByNickname("nick0"));
-//        User u = new User("nick4", "mail_4_@sapo.pt", null, friends, cities, 0);
-//        u.setVisitPoints(87);
-//        return u;
-//    }
+
     /**
      * Test of readCitiesToGraph method, of class InputOutput.
      */
@@ -191,4 +95,20 @@ public class InputOutputTest {
 
     }
 
+    /**
+     * Test of readUsersFromFile method, of class InputOutput.
+     */
+    @Test
+    public void testReadUsersFromFile() throws Exception {
+        System.out.println("readUsersFromFile");
+        String filePath = "D:\\users10.txt";
+        SocialNetwork r = new SocialNetwork();
+        r.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
+        Map<User, Set<User>> result = InputOutput.readUsersFromFile(filePath, r);
+        System.out.println("hello");
+        
+     
+    }
+
+ 
 }
