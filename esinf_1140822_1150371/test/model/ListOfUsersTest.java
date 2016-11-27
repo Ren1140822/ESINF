@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,12 +31,13 @@ public class ListOfUsersTest {
 
     public ListOfUsersTest() throws FileNotFoundException {
         r = new SocialNetwork();
-        instance = r.getListOfUsers();
-        ListOfUsers instance = this.instance;
         ListOfCities list = new ListOfCities();
         list.setListOfCities(InputOutput.readCityFromFile("D:\\cities300.txt"));
         r.setListOfCities(list);
-        instance.setUserMap(InputOutput.readUsersFromFile("D:\\users300.txt", r));
+        r.setListOfUsers(InputOutput.readUsersFromFile("D:\\users300.txt", r));
+        instance = r.getListOfUsers();
+        ListOfUsers instance = this.instance;
+
         instance.getFriendsMap().clear();
         instance.addFriend("nick0", "nick1");
         instance.addFriend("nick1", "nick3");
@@ -72,42 +72,6 @@ public class ListOfUsersTest {
 //    public void testGetUserSet() {
 //        System.out.println("getUserSet");
 //        Set<User> userSet = new HashSet();
-=======
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package model;
-//
-//import graphbase.Graph;
-//import java.io.FileNotFoundException;
-//import java.util.HashSet;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
-//import org.junit.After;
-//import org.junit.AfterClass;
-//import org.junit.Before;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
-//import utils.InputOutput;
-//
-///**
-// *
-// * @author Renato Oliveira 1140822@isep.ipp.pt
-// */
-//public class ListOfUsersTest {
-//
-//    SocialNetwork r;
-//    ListOfUsers instance;
-//
-//    public ListOfUsersTest() throws FileNotFoundException {
-//        r = new SocialNetwork();
-//        instance = r.getListOfUsers();
->>>>>>> origin/master
 //        ListOfUsers instance = this.instance;
 //        ListOfCities list = new ListOfCities();
 //        list.setListOfCities(InputOutput.readCityFromFile("D:\\cities300.txt"));
@@ -416,7 +380,6 @@ public class ListOfUsersTest {
 //        User result = instance.findMostInfluentialUser();
 //        assertEquals(expResult, result);
 //    }
-<<<<<<< HEAD
     /**
      * // * Test of removeFriend method, of class ListOfUsers. //
      */
@@ -470,11 +433,11 @@ public class ListOfUsersTest {
         System.out.println("getRelationshipDistance");
         String nickname1 = "nick0";
         String nickname2 = "nick3";
-        ListOfUsers instance = this.instance;
+        ListOfUsers instance = InputOutput.readUsersFromFile("D:\\users10.txt", r);
+        instance.getFriendsMap().clear();
         ListOfCities list = new ListOfCities();
         list.setListOfCities(InputOutput.readCityFromFile("D:\\cities10.txt"));
         r.setListOfCities(list);
-        instance.setUserMap(InputOutput.readUsersFromFile("D:\\users10.txt", r));
 
         instance.addFriend("nick0", "nick1");
         instance.addFriend("nick1", "nick3");
@@ -502,10 +465,11 @@ public class ListOfUsersTest {
         LinkedList<User> list = new LinkedList<>();
 
         list.add(instance.getUserByNickname("nick1"));
+             list.add(instance.getUserByNickname("nick3"));
         list.add(instance.getUserByNickname("nick6"));
         list.add(instance.getUserByNickname("nick7"));
-        list.add(instance.getUserByNickname("nick4"));
-        list.add(instance.getUserByNickname("nick3"));
+     
+   
 
         Iterable<User> expResult = list;
         Iterable<User> result = instance.findUsersWithinRelationshipDistance(nickname1, distance);
@@ -523,7 +487,7 @@ public class ListOfUsersTest {
         ListOfUsers instance = this.instance;
         LinkedList<User> list = new LinkedList<>();
 
-        list.add(instance.getUserByNickname("nick0"));
+        list.add(instance.getUserByNickname("nick3")); //tambem pode ser nick 0 tao a mesma distancia
         list.add(instance.getUserByNickname("nick5"));
 
         Iterable<User> expResult = list;
@@ -565,14 +529,10 @@ public class ListOfUsersTest {
         LinkedList<User> list = new LinkedList<>();
 
         list.add(instance.getUserByNickname("nick6"));
-        list.add(instance.getUserByNickname("nick3"));
+        list.add(instance.getUserByNickname("nick7"));
         Iterable<User> expResult = list;
         Iterable< User> result = instance.findMostInfluentialUser();
         assertEquals(expResult, result);
     }
 
 }
-=======
-////  
-//}
->>>>>>> origin/master

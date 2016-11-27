@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import model.City;
+import model.ListOfUsers;
 import model.SocialNetwork;
 import model.User;
 
@@ -67,8 +68,9 @@ public class InputOutput {
      * @return the list of users
      * @throws FileNotFoundException
      */
-    public static Map<User, Set<User>> readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
+    public static ListOfUsers readUsersFromFile(String filePath, SocialNetwork r) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(filePath));
+        ListOfUsers instance = r.getListOfUsers();
         Map<String, User> userMap = new LinkedHashMap<>();
         String nickName = "";
         String email = "";
@@ -98,17 +100,26 @@ public class InputOutput {
             userMap.put(newUser.getNickname(), newUser);
             
         }
-        
-        for (User u : friendsMap.keySet()) {
-          
-            Set<User> aux=new HashSet<>();
-//            for (String s : friendsMap.get(u)) {
-//                aux.add(userMap.get(s));
-//            }
-            finalmap.put(u, aux);
-        
-    }
-        return finalmap;
+        instance.setUserMap(userMap);
+             for (User u :userMap.values()) {
+                    for (User u2 :friendsMap.keySet()) 
+                    {
+                        if(u.equals(u2)){
+                            for (String friend : friendsMap.get(u2)) {
+                                    instance.addFriend(u.getNickname(),friend);
+                            }
+                       
+                        }
+                    }
+             }
+//        for (User u : friendsMap.keySet()) {
+//          
+//            Set<User> aux=new HashSet<>();
+//
+//            finalmap.put(u, aux);
+//        
+//    }
+        return instance;
 
     }
 
