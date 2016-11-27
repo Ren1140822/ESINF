@@ -140,6 +140,10 @@ public class ListOfUsers {
         return false;
     }
 
+    /**
+     * Adds friends from friends map to a graph
+     * @return true if all O K
+     */
     public boolean addFriendToGraph() {
         for (User u : friendsMap.keySet()) {
             friendsGraph.insertVertex(u);
@@ -154,6 +158,12 @@ public class ListOfUsers {
         return true;
     }
 
+    /**
+     * Gets relationship distance between two users
+     * @param nickname1 user1
+     * @param nickname2 user2
+     * @return  the relationship distance
+     */
     public int getRelationshipDistance(String nickname1, String nickname2) {
         LinkedList<User> users = new LinkedList<>();
         graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
@@ -161,6 +171,13 @@ public class ListOfUsers {
         return users.size()-2;
     }
 
+    /**
+     * Finds users within a certain relationship distance
+     * @param nickname1 the user
+     * @param distance the distance 
+     * @return the list of users
+     * 
+     */
     public Iterable<User> findUsersWithinRelationshipDistance(String nickname1, int distance) {
         LinkedList<User> users = new LinkedList<>();
  
@@ -168,7 +185,10 @@ public class ListOfUsers {
         users = graphbase.GraphAlgorithms.DepthFirstSearchWithLimit(friendsGraph, usr, distance);
         return users;
     }
-
+/**
+ * Finds users with greatest relationship distance
+ * @return the users with greatest relationship distance 
+ */
     public Iterable<User> findUsersWithGreatestRelationshipDistance() {
         int maxDistance = 0;
         LinkedList<User> usersFarthestAway = new LinkedList<>();
@@ -188,6 +208,12 @@ public class ListOfUsers {
         }
         return usersFarthestAway;
     }
+    /**
+     * finds users with friends in common
+     * @param nick1 user 1
+     * @param nick2 user 2
+     * @return  list with usersi n comon
+     */
       public Iterable<User> findUsersWithFriendsInCommon(String nick1,String nick2)
       {
           LinkedList<User>friendsInCommon = new LinkedList<>();
@@ -196,7 +222,10 @@ public class ListOfUsers {
          friendsInCommon= graphbase.GraphAlgorithms.getCommonDirectVertices(friendsGraph, u, u2);
          return friendsInCommon;
       }
-    
+    /**
+     * Gets most influential users
+     * @return the most influential users
+     */
     public Iterable<User> findMostInfluentialUser()
     {
           LinkedList<User>mostInfluentialUsers =    graphbase.GraphAlgorithms.graphCentrality(friendsGraph);
