@@ -204,20 +204,13 @@ public class SocialNetwork implements Checkinable {
                     if (this.listOfUsers.getUserMap().containsValue(friend)) {
 
                         if (friend.getCurrentCity().equals(connectedCity)) {
-                            closestFriends.add(user);
+                            closestFriends.add(friend);
                         }
                     }
                 }
             }
         }
-        for (User friend : friends) {
-            friend.getCurrentCity();
-            if (this.listOfUsers.getUserMap().containsValue(friend)) {
-            if (friend.getCurrentCity().equals(currentCity)) {
-                closestFriends.add(user);
-            }
-        }
-        }
+       
         return closestFriends;
     }
 
