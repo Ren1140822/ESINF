@@ -158,7 +158,7 @@ public class ListOfUsers {
         LinkedList<User> users = new LinkedList<>();
         graphbase.GraphAlgorithms.shortestPath(friendsGraph, getUserByNickname(nickname1), getUserByNickname(nickname2), users);
 
-        return users.size();
+        return users.size()-2;
     }
 
     public Iterable<User> findUsersWithinRelationshipDistance(String nickname1, int distance) {

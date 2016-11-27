@@ -258,7 +258,7 @@ public class ListOfUsersTest {
         instance.addFriend("nick7", "nick4");
         instance.addFriendToGraph();
         Graph<User, Integer> friendsGraph = instance.getFriendsGraph();
-        int expResult = 3;
+        int expResult = 1;
         int result = instance.getRelationshipDistance(nickname1, nickname2);
         assertEquals(expResult, result);
 
