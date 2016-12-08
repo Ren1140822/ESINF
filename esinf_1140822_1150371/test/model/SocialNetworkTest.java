@@ -428,16 +428,14 @@ public class SocialNetworkTest {
         System.out.println("createMayorTree");
         SocialNetwork instance = new SocialNetwork();
        
-        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
-        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections10.txt", InputOutput.readCityFromFile("D:\\city10.txt").values());
-        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users10.txt", instance));
-       
-        BST result = instance.createMayorTree();
-        Iterable<User> mayors =result.postOrder();
-        for(User e:mayors){
-                       System.out.println(e+"asdsdasasdasdasdasdasdasd");
-        }
+        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\cities30.txt"));
+        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections30.txt", InputOutput.readCityFromFile("D:\\cities30.txt").values());
+        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users30.txt", instance));
+      
+        BST<User> result = instance.createMayorTree();
+        System.out.println(result.toString());
         
+       
     }
 
     /**

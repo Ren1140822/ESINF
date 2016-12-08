@@ -96,6 +96,7 @@ public class InputOutput {
             for (City c : newUser.getCitiesVisited()) {
                 newUser.setVisitPoints(newUser.getVisitPoints() + c.getNumberOfPointsAwarded());
             }
+           
             friendsMap.put(newUser, friends);
             userMap.put(newUser.getNickname(), newUser);
             

@@ -304,7 +304,22 @@ public class SocialNetwork implements Checkinable,Comparator<User> {
         return sorted.get(sorted.lastKey()); //como o treemap ordena por ordem crescente a ultima key sera a cidade com mais amigos
 
     }
+    
+    private void actulizaMayor(){
+    this.listOfUsers.addFriendToGraph();
+        for (User u:this.listOfUsers.getFriendsGraph().vertices()) {
+            City current = u.getCurrentCity();
+            if(u.getVisitPoints()>current.getMayor().getVisitPoints()){
+                
+                current.setMayor(u);
+            }
+                    
+        }
+    }
+    
+    
     public BST createMayorTree(){
+        this.actulizaMayor();
         List<User> listOfMayors = new ArrayList<User>();
         BST<User> theTree =new BST();
         for (City city : this.getListOfCities().cityGraph.vertices()) {
@@ -313,12 +328,13 @@ public class SocialNetwork implements Checkinable,Comparator<User> {
         }
         Collections.sort(listOfMayors,this); //ordena por ordem descrescente de pontos
         
-        for (User u : listOfMayors) {
+        for (User u : this.listOfUsers.friendsGraph.vertices()) {
             theTree.insert(u);
+           
             
         }
-         System.out.println("tamanho do mambo"+theTree.size());
-                return theTree;
+         
+        return theTree;
     }
 
     @Override

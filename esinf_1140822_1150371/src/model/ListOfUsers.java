@@ -66,7 +66,7 @@ public class ListOfUsers {
      * @return the user if found
      */
     public User getUserByNickname(String nick) {
-        for (User user : userMap.values()) {
+        for (User user : getUserMap().values()) {
             if (user.getNickname().equals(nick)) {
                 return user;
             }
@@ -87,7 +87,7 @@ public class ListOfUsers {
             }
         };
         List<User> usersList = new LinkedList();
-        for (User user : userMap.values()) {
+        for (User user : getUserMap().values()) {
             usersList.add(user);
         }
         Collections.sort(usersList, comparator);
@@ -104,8 +104,8 @@ public class ListOfUsers {
         if (this == l2) {
             return true;
         }
-        for (User user : userMap.values()) {
-            for (User user1 : aux.userMap.values()) {
+        for (User user : getUserMap().values()) {
+            for (User user1 : aux.getUserMap().values()) {
                 if (!user1.equals(userMap.values())) {
                     return false;
                 }
