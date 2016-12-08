@@ -5,6 +5,7 @@
  */
 package model;
 
+import BST.BST;
 import graphMatrizAdj.AdjacencyMatrixGraph;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -261,6 +262,197 @@ public class SocialNetworkTest {
         for (City city : result) {
             System.out.println(city.getCityName() + ",");
         }
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getListOfCities method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetListOfCities() {
+        System.out.println("getListOfCities");
+        SocialNetwork instance = new SocialNetwork();
+        ListOfCities expResult = null;
+        ListOfCities result = instance.getListOfCities();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setListOfCities method, of class SocialNetwork.
+     */
+    @Test
+    public void testSetListOfCities() {
+        System.out.println("setListOfCities");
+        ListOfCities ListOfCities = null;
+        SocialNetwork instance = new SocialNetwork();
+        instance.setListOfCities(ListOfCities);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getListOfUsers method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetListOfUsers() {
+        System.out.println("getListOfUsers");
+        SocialNetwork instance = new SocialNetwork();
+        ListOfUsers expResult = null;
+        ListOfUsers result = instance.getListOfUsers();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setListOfUsers method, of class SocialNetwork.
+     */
+    @Test
+    public void testSetListOfUsers() {
+        System.out.println("setListOfUsers");
+        ListOfUsers listOfUsers = null;
+        SocialNetwork instance = new SocialNetwork();
+        instance.setListOfUsers(listOfUsers);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addUser method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddUser() {
+        System.out.println("addUser");
+        String nickname = "";
+        String email = "";
+        String currentCity = "";
+        List<City> cities = null;
+        int visitPoints = 0;
+        SocialNetwork instance = new SocialNetwork();
+        boolean expResult = false;
+        boolean result = instance.addUser(nickname, email, currentCity, cities, visitPoints);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeUser method, of class SocialNetwork.
+     */
+    @Test
+    public void testRemoveUser() {
+        System.out.println("removeUser");
+        String nickname = "";
+        SocialNetwork instance = new SocialNetwork();
+        boolean expResult = false;
+        boolean result = instance.removeUser(nickname);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity() {
+        System.out.println("addCity");
+        String cityName = "";
+        int numberOfPointsAwarded = 0;
+        double latitude = 0.0;
+        double longitude = 0.0;
+        SocialNetwork instance = new SocialNetwork();
+        boolean expResult = false;
+        boolean result = instance.addCity(cityName, numberOfPointsAwarded, latitude, longitude);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of checkIn method, of class SocialNetwork.
+     */
+    @Test
+    public void testCheckIn() {
+        System.out.println("checkIn");
+        String user = "";
+        String city = "";
+        SocialNetwork instance = new SocialNetwork();
+        boolean expResult = false;
+        boolean result = instance.checkIn(user, city);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFriendsByCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetFriendsByCity_String_String() {
+        System.out.println("getFriendsByCity");
+        String nickname = "";
+        String cityName = "";
+        SocialNetwork instance = new SocialNetwork();
+        Map<String, User> expResult = null;
+        Map<String, User> result = instance.getFriendsByCity(nickname, cityName);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFriendsByCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetFriendsByCity_3args() {
+        System.out.println("getFriendsByCity");
+        String nickname = "";
+        double latitude = 0.0;
+        double longitude = 0.0;
+        SocialNetwork instance = new SocialNetwork();
+        Map<String, User> expResult = null;
+        Map<String, User> result = instance.getFriendsByCity(nickname, latitude, longitude);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createMayorTree method, of class SocialNetwork.
+     */
+    @Test
+    public void testCreateMayorTree() throws FileNotFoundException, IOException {
+        System.out.println("createMayorTree");
+        SocialNetwork instance = new SocialNetwork();
+       
+        instance.getListOfCities().setListOfCities(InputOutput.readCityFromFile("D:\\city10.txt"));
+        instance.getListOfCities().cityGraph = InputOutput.loadCitiesGraph("D:\\cityConnections10.txt", InputOutput.readCityFromFile("D:\\city10.txt").values());
+        instance.setListOfUsers(InputOutput.readUsersFromFile("D:\\users10.txt", instance));
+       
+        BST result = instance.createMayorTree();
+        Iterable<User> mayors =result.postOrder();
+        for(User e:mayors){
+                       System.out.println(e+"asdsdasasdasdasdasdasdasd");
+        }
+        
+    }
+
+    /**
+     * Test of compare method, of class SocialNetwork.
+     */
+    @Test
+    public void testCompare() {
+        System.out.println("compare");
+        User o1 = new User();
+        o1.setVisitPoints(200);
+        User o2 = new User();
+        o2.setVisitPoints(300);
+        SocialNetwork instance = new SocialNetwork();
+        int expResult = 1;
+        int result = instance.compare(o1, o2);
         assertEquals(expResult, result);
     }
 

@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @author Renato Oliveira 1140822@isep.ipp.pt
  */
-public class User  {
+public class User  implements Comparable<User>{
 
     private String nickname;
 
@@ -194,6 +194,11 @@ public class User  {
      @Override
     public int hashCode() {
         return Objects.hash(nickname,email,visitPoints,citiesVisited);
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return Integer.compare(this.visitPoints, o.getVisitPoints());
     }
 
 }

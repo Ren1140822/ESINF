@@ -5,6 +5,7 @@
  */
 package model;
 
+import BST.BST;
 import controller.AddCityController;
 import controller.AddUserController;
 import controller.RemoveUserController;
@@ -12,6 +13,8 @@ import graphMatrizAdj.GraphAlgorithms;
 import graphMapAdj.Edge;
 import graphMapAdj.Graph;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,7 +28,7 @@ import java.util.TreeMap;
  *
  * @author Jose Silva <1150371@isep.ipp.pt>
  */
-public class SocialNetwork implements Checkinable {
+public class SocialNetwork implements Checkinable,Comparator<User> {
 
     private ListOfCities listOfCities;
     private ListOfUsers listOfUsers;
@@ -301,6 +304,28 @@ public class SocialNetwork implements Checkinable {
         return sorted.get(sorted.lastKey()); //como o treemap ordena por ordem crescente a ultima key sera a cidade com mais amigos
 
     }
+    public BST createMayorTree(){
+        List<User> listOfMayors = new ArrayList<User>();
+        BST<User> theTree =new BST();
+        for (City city : this.getListOfCities().cityGraph.vertices()) {
+            listOfMayors.add(city.getMayor());
+            
+        }
+        Collections.sort(listOfMayors,this); //ordena por ordem descrescente de pontos
+        
+        for (User u : listOfMayors) {
+            theTree.insert(u);
+            
+        }
+         System.out.println("tamanho do mambo"+theTree.size());
+                return theTree;
+    }
 
+    @Override
+    public int compare(User o1, User o2) {
+        return Integer.compare(o2.getVisitPoints(), o1.getVisitPoints());
+    }
 
 }
+
+
