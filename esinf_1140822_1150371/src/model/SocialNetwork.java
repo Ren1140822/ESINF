@@ -304,7 +304,9 @@ public class SocialNetwork implements Checkinable,Comparator<User> {
         return sorted.get(sorted.lastKey()); //como o treemap ordena por ordem crescente a ultima key sera a cidade com mais amigos
 
     }
-    
+   /**
+    * Metodo para actulizar o mayor de cada cidade
+    */
     private void actulizaMayor(){
     this.listOfUsers.addFriendToGraph();
         for (User u:this.listOfUsers.getFriendsGraph().vertices()) {
@@ -317,8 +319,11 @@ public class SocialNetwork implements Checkinable,Comparator<User> {
         }
     }
     
-    
-    public BST createMayorTree(){
+    /**
+     * Metodo para criar uma arvore binaria de mayors
+     * @return Arvore binaria de mayors
+     */
+    public BST<User> createMayorTree(){
         this.actulizaMayor();
         List<User> listOfMayors = new ArrayList<User>();
         BST<User> theTree =new BST();
@@ -336,7 +341,12 @@ public class SocialNetwork implements Checkinable,Comparator<User> {
          
         return theTree;
     }
-
+/**
+ *  Override do metodo compare , para utilizar no Collections.sort
+ * @param o1 utilizador 1
+ * @param o2 utilizador 2
+ * @return 
+ */
     @Override
     public int compare(User o1, User o2) {
         return Integer.compare(o2.getVisitPoints(), o1.getVisitPoints());
